@@ -1,0 +1,62 @@
+/* HEADER NAVIGASI */
+.topbar {
+    background-color: #2b3035;
+    color: white;
+    padding: 19px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.topbar h2 { font-size: 1.5rem; font-weight: 600; }
+
+.hamburger {
+    display: none;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.btn-logout {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+.btn-logout:hover { background-color: #c62828; }
+
+/* ================= RESPONSIVE HEADER ================= */
+@media (max-width: 768px) {
+    .topbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+    }
+    .hamburger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 8px;
+    }
+    .topbar h2 {
+        font-size: 1.1rem;
+        margin: 0 10px;
+        flex: 1;
+        text-align: left;
+    }
+    .btn-logout {
+        display: inline-block;
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
