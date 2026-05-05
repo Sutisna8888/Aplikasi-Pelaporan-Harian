@@ -265,7 +265,7 @@
         <div class="card card-orange">
             <div class="card-number">{{ $penggunaAktifHarian }}</div>
             <div class="card-icon"><i class="fas fa-file-alt"></i></div>
-            <div class="card-title">Pengguna Aktif Harian</div>
+            <div class="card-title">Pengguna Aktif Setiap hari nya</div>
         </div>
         
         <!-- Total Users Card -->
