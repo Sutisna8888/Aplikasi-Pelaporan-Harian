@@ -57,11 +57,15 @@
     </div>
 </div>
 
-<div id="imageModal" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
-    <div style="background: #fff; padding: 20px; border-radius: 12px; width: 100%; max-width: 500px; position: relative; text-align: center;">
-        <span onclick="closeModal()" style="position: absolute; top: 10px; right: 20px; font-size: 2rem; cursor: pointer; color: #333; line-height: 1;">&times;</span>
-        <h4 id="modalTitle" style="margin-top: 0; margin-bottom: 15px; color: #333; text-align: left;"></h4>
-        <img id="modalImg" src="" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<div id="imageModal" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(5px);">
+    <div style="width: 100%; max-width: 600px; position: relative; display: flex; flex-direction: column; align-items: center;">
+        <!-- Header Pop-up -->
+        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px;">
+            <h4 id="modalTitle" style="margin: 0; color: #fff; font-size: 1.25rem; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5);"></h4>
+            <span onclick="closeModal()" style="font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; margin-top: -5px; transition: 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#fff'">&times;</span>
+        </div>
+        <!-- Gambar Utama -->
+        <img id="modalImg" src="" style="max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
     </div>
 </div>
 

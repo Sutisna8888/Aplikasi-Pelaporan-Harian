@@ -118,6 +118,31 @@
         .btn-green:hover {
             background-color: #22c55e;
         }
+
+        /* Error Alert Styling */
+        .error-alert {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #f87171;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-alert svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
     </style>
 
     <div class="login-page-wrapper">
@@ -140,8 +165,11 @@
 
                 <!-- Pesan Error -->
                 @if ($errors->any())
-                    <div class="mb-3 text-[14px] font-medium text-red-500 text-center">
-                        Username/NIP atau Password yang Anda masukkan salah.
+                    <div class="error-alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Username/NIP atau Password yang Anda masukkan salah.</span>
                     </div>
                 @endif
 

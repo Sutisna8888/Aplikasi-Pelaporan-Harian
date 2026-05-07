@@ -292,13 +292,13 @@
     </div>
 
     <!-- Modal Lihat Foto -->
-    <div id="modalLihatFoto" class="modal-overlay">
-        <div class="modal-content" style="max-width: 600px; text-align: center;">
-            <div class="modal-header">
-                <h3 class="modal-title">Foto Informasi</h3>
-                <button class="close-modal" onclick="closeModalFoto()">&times;</button>
+    <div id="modalLihatFoto" class="modal-overlay" style="background: rgba(0,0,0,0.85) !important; backdrop-filter: blur(5px);">
+        <div style="width: 100%; max-width: 600px; position: relative; display: flex; flex-direction: column; align-items: center; padding: 20px;">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h4 style="margin: 0; color: #fff; font-size: 1.25rem; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Foto Informasi</h4>
+                <span onclick="closeModalFoto()" style="font-size: 2.5rem; cursor: pointer; color: #fff; line-height: 1; transition: 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#fff'">&times;</span>
             </div>
-            <img id="previewFoto" src="" alt="Foto Info" style="max-width: 100%; max-height: 70vh; border-radius: 8px; object-fit: contain;">
+            <img id="previewFoto" src="" alt="Foto Info" style="max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         </div>
     </div>
 
