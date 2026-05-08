@@ -352,7 +352,7 @@
         </div>
     </div>
 
-    @include('admin.createUser')
-    @include('admin.editUser')
+    @include('admin.tambah-pengguna')
+    @include('admin.edit-pengguna')
 
 @endsection

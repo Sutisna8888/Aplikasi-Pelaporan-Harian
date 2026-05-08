@@ -11,6 +11,7 @@ class InfoBpsController extends Controller
     public function index()
     {
         $infos = InfoBps::orderBy('tanggal', 'desc')->get();
+
         return view('admin.info-bps', compact('infos'));
     }
 
@@ -36,11 +37,11 @@ class InfoBpsController extends Controller
     public function destroy($id)
     {
         $info = InfoBps::findOrFail($id);
-        
+
         if (Storage::disk('public')->exists($info->foto)) {
             Storage::disk('public')->delete($info->foto);
         }
-        
+
         $info->delete();
 
         return redirect()->route('admin.info-bps.index')->with('success', 'Info berhasil dihapus.');

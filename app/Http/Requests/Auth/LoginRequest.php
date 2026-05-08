@@ -12,7 +12,6 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
@@ -26,7 +25,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login_id' => ['required', 'string' ],
+            'login_id' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -49,7 +48,7 @@ class LoginRequest extends FormRequest
         // 3. Siapkan kunci untuk login
         $credentials = [
             $fieldType => $loginId,
-            'password' => $this->input('password')
+            'password' => $this->input('password'),
         ];
 
         // 4. Proses percobaannya
@@ -67,7 +66,7 @@ class LoginRequest extends FormRequest
         // Jika pegawai mencoba menekan tombol admin, atau sebaliknya
         if ($expectedRole !== $actualRole) {
             Auth::logout(); // Keluarkan lagi secara paksa
-            
+
             throw ValidationException::withMessages([
                 'login_id' => 'Gagal masuk. Pastikan Anda menekan tombol login yang sesuai dengan tipe akun Anda.',
             ]);

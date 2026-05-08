@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kegiatan;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Buat User Admin untuk Uji Coba (Menggunakan updateOrCreate)
-        \App\Models\User::updateOrCreate(
+        User::updateOrCreate(
             ['nip' => '199001012024011001'], // Kunci pencarian
             [
                 'username' => 'admin_bps',
@@ -28,13 +29,13 @@ class DatabaseSeeder extends Seeder
         );
 
         // 2. Akun Pegawai (User Biasa)
-        \App\Models\User::updateOrCreate(
+        User::updateOrCreate(
             ['nip' => '199505052024012002'], // Kunci pencarian
             [
                 'username' => 'pegawai_bps',
                 'email' => 'pegawai@bps.go.id',
                 'password' => bcrypt('password123'),
-                'role' => 'pegawai', 
+                'role' => 'pegawai',
                 'jabatan' => 'Statistisi Pertama',
             ]
         );
@@ -48,7 +49,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($kegiatan as $k) {
-            \App\Models\Kegiatan::updateOrCreate(
+            Kegiatan::updateOrCreate(
                 ['nama_kegiatan' => $k['nama_kegiatan']], // Kunci pencarian
                 $k
             );

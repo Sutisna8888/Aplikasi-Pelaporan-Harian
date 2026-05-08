@@ -13,7 +13,8 @@ class Kegiatan extends Model
     ];
 
     // Relasi: Satu jenis kegiatan bisa muncul di banyak laporan
-    public function laporans() {
+    public function laporans()
+    {
         return $this->hasMany(Laporan::class);
     }
 }

@@ -10,19 +10,19 @@ return new class extends Migration
     {
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
-            
+
             // Relasi ke tabel User dan Kegiatan
             // constrained() otomatis mencari tabel 'users' dan 'kegiatans'
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('kegiatan_id')->constrained('kegiatans')->cascadeOnDelete();
-            
+
             // Data Laporan
             $table->date('tanggal');
             $table->text('deskripsi');
             $table->time('jam_mulai');
             $table->time('jam_selesai')->nullable();
             $table->integer('durasi_menit')->nullable();
-            
+
             // Dokumentasi & Lokasi
             $table->string('foto_mulai', 255);
             $table->string('foto_selesai', 255)->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->string('lokasi_teks', 255)->nullable();
             $table->text('keterangan')->nullable();
-            
+
             $table->timestamps();
         });
     }
