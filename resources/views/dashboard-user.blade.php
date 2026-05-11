@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title', 'Dashboard Pegawai - ALPHA')
-@section('header_title', 'Dashboard Pegawai')
+@section('header_title', 'Dashboard')
 
 @section('content')
 

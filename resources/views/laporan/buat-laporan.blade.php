@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Input Laporan Harian - ALPHA')
+@section('title', ' Input Laporan Harian -ALPHA')
 @section('header_title', 'Input Laporan Harian')
 
 @section('content')

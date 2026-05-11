@@ -19,8 +19,9 @@
 
     .sidebar-brand {
         display: flex;
-        justify-content: center; 
-        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
         padding: 20px 13px; 
         background: transparent !important; /* Menghapus warna bawaan dari sidebar.css */
         border-bottom: 1px solid rgba(255,255,255,0.05); 
@@ -29,8 +30,19 @@
     .brand-logo {
         width: 103px; 
         height: auto;
-        margin-right: 0; 
+        margin-right: 0;
+        margin-bottom: 8px;
         display: block;
+    }
+
+    .brand-text {
+        margin: 0;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: left;
     }
 
     .sidebar-menu {
@@ -73,6 +85,9 @@
         .brand-logo {
             width: 90px; 
         }
+        .brand-text {
+            font-size: 0.9rem;
+        }
     }
 </style>
 
@@ -80,6 +95,7 @@
     <div>
         <div class="sidebar-brand">
             <img src="{{ asset('images/logo_alpha.png') }}" alt="Logo Alpha" class="brand-logo">
+            <p class="brand-text">Aplikasi laporan harian</p>
         </div>
         
         <ul class="sidebar-menu">

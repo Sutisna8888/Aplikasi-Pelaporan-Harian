@@ -2,13 +2,59 @@
 .topbar {
     background-color: #2b3035;
     color: white;
-    padding: 19px 35px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Baris Pertama Header */
+.topbar-row-1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px 35px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.topbar h2 { font-size: 1.5rem; font-weight: 600; }
+
+.topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.brand-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.brand-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Baris Kedua Header */
+.topbar-row-2 {
+    padding: 12px 35px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.topbar-row-2 h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+}
 
 .hamburger {
     display: none;
@@ -28,17 +74,39 @@
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
+    transition: background-color 0.3s ease;
 }
-.btn-logout:hover { background-color: #c62828; }
+
+.btn-logout:hover {
+    background-color: #c62828;
+}
 
 /* ================= RESPONSIVE HEADER ================= */
 @media (max-width: 768px) {
-    .topbar {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
+    .topbar-row-1 {
+        padding: 12px 15px;
     }
+
+    .topbar-row-2 {
+        padding: 10px 15px;
+    }
+
+    .topbar-brand {
+        gap: 10px;
+    }
+
+    .brand-name {
+        font-size: 1rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.65rem;
+    }
+
+    .topbar-row-2 h2 {
+        font-size: 0.95rem;
+    }
+
     .hamburger {
         display: inline-flex;
         align-items: center;
@@ -48,15 +116,9 @@
         border: 1px solid rgba(255,255,255,0.3);
         border-radius: 8px;
     }
-    .topbar h2 {
-        font-size: 1.1rem;
-        margin: 0 10px;
-        flex: 1;
-        text-align: left;
-    }
+
     .btn-logout {
-        display: inline-block;
         padding: 6px 12px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 }
