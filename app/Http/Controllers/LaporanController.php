@@ -114,7 +114,7 @@ class LaporanController extends Controller
             'status' => 'berjalan',
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Kegiatan dimulai! Data aman di server.');
+        return redirect()->route('laporan.create')->with('success', 'Kegiatan dimulai! Data aman di server.');
     }
 
     /**

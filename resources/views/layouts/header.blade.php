@@ -6,7 +6,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="brand-content">
-                <h1 class="brand-name">ALPHA</h1>
+                <img src="{{ asset('images/logo_alpha.png') }}" alt="Logo ALPHA" style="height: 30px; width: auto; margin-bottom: 4px;">
                 <p class="brand-subtitle">Aplikasi Laporan Harian</p>
             </div>
         </div>

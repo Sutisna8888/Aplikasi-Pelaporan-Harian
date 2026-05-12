@@ -42,8 +42,8 @@ class LoginRequest extends FormRequest
         // 1. Ambil apa yang diketik user di form
         $loginId = $this->input('login_id');
 
-        // 2. Cek apakah formatnya email? Jika iya jadikan 'email', jika tidak jadikan 'nip'
-        $fieldType = filter_var($loginId, FILTER_VALIDATE_EMAIL) ? 'email' : 'nip';
+        // 2. Cek apakah formatnya angka (NIP)? Jika iya jadikan 'nip', jika tidak jadikan 'username'
+        $fieldType = is_numeric($loginId) ? 'nip' : 'username';
 
         // 3. Siapkan kunci untuk login
         $credentials = [
@@ -66,6 +66,8 @@ class LoginRequest extends FormRequest
         // Jika pegawai mencoba menekan tombol admin, atau sebaliknya
         if ($expectedRole !== $actualRole) {
             Auth::logout(); // Keluarkan lagi secara paksa
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
 
             throw ValidationException::withMessages([
                 'login_id' => 'Gagal masuk. Pastikan Anda menekan tombol login yang sesuai dengan tipe akun Anda.',

@@ -60,14 +60,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if ($request->user()->role !== 'admin') {
-            Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            
-            return redirect()->route('login.admin')->withErrors(['login_id' => 'Anda bukan admin.']);
-        }
-
         return redirect()->intended(route('admin.dashboard', absolute: false));
     }
 
@@ -79,14 +71,6 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        if ($request->user()->role === 'admin') {
-            Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            
-            return redirect()->route('login.user')->withErrors(['login_id' => 'Silahkan login dari halaman login admin.']);
-        }
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

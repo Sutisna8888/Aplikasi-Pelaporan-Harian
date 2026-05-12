@@ -105,7 +105,7 @@
     </div>
 
     <div class="p-10 md:p-14 border-t border-gray-50">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+        <div class="grid grid-cols-1 gap-16 items-start">
             
             <div class="relative">
                 <div class="absolute -left-6 top-0 bottom-0 w-1 bg-blue-500/20 rounded-full hidden md:block"></div>
@@ -118,47 +118,12 @@
                     </p>
                 </div>
             </div>
-            
-            <div>
-                <h3 class="text-3xl font-bold text-[#1e3a8a] mb-8 tracking-tight flex items-center gap-3">
-                    <i class="fas fa-bullseye text-xl text-blue-500"></i> Visi & Misi
-                </h3>
-                
-                <div class="bg-gradient-to-r from-[#1e40af] to-[#1e73be] p-6 rounded-2xl shadow-md mb-6 transform hover:scale-[1.01] transition-transform">
-                    <span class="text-blue-200 text-xs font-bold uppercase tracking-widest">Visi Kami</span>
-                    <p class="text-white text-xl font-bold mt-2 leading-snug">
-                        "Penyedia Data Statistik Berkualitas Untuk Indonesia Maju"
-                    </p>
-                </div>
-
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                            <i class="fas fa-check text-[#1e73be]"></i>
-                        </div>
-                        <p class="text-sm text-[#475569] font-medium">Menyediakan data statistik berkualitas dan wawasan (insight).</p>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                            <i class="fas fa-shield-alt text-[#1e73be]"></i>
-                        </div>
-                        <p class="text-sm text-[#475569] font-medium">Menguatkan kepemimpinan BPS dalam Sistem Statistik Nasional.</p>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                            <i class="fas fa-users-cog text-[#1e73be]"></i>
-                        </div>
-                        <p class="text-sm text-[#475569] font-medium">Menguatkan kapasitas kelembagaan statistik yang efektif.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
     <div class="bg-[#f8fafc] p-10 md:p-14 border-t border-gray-100 relative overflow-hidden">
         <div class="absolute inset-0 polka-bg opacity-30 z-0 pointer-events-none"></div>
         <div class="relative z-10">
-            <!-- Header Section with Logo Integration -->
             <div class="flex flex-col md:flex-row items-center gap-8 md:gap-10 mb-10 md:mb-16">
                 <div class="md:w-1/3 flex justify-center">
                     <div class="bg-white p-6 md:p-8 rounded-3xl md:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-50 transform md:-rotate-2 hover:rotate-0 transition-all duration-500 group">
