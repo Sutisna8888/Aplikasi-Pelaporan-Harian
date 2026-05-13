@@ -55,6 +55,9 @@ Route::put('/admin/kegiatan/{kegiatan}/toggle', [KegiatanController::class, 'tog
 Route::get('/admin/laporan', [AdminLaporanController::class, 'index'])
     ->middleware(['auth', 'verified', 'admin'])
     ->name('admin.laporan.index');
+Route::get('/admin/laporan/search-users', [AdminLaporanController::class, 'searchUsers'])
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('admin.laporan.searchUsers');
 Route::get('/admin/laporan/download', [AdminLaporanController::class, 'downloadRekap'])
     ->middleware(['auth', 'verified', 'admin'])
     ->name('admin.laporan.download');

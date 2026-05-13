@@ -66,7 +66,7 @@
             <h3 id="gmk_title" style="margin: 0 0 10px 0; color: #1e3a8a;">Judul</h3>
             <p id="gmk_message" style="color: #555; font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px;">Pesan</p>
             <div style="display: flex; gap: 10px;">
-                <button type="button" onclick="document.getElementById('global_modal_konfirmasi').style.display='none'" style="flex: 1; padding: 12px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                <button type="button" id="gmk_btn_batal" onclick="document.getElementById('global_modal_konfirmasi').style.display='none'" style="flex: 1; padding: 12px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
                     Batal
                 </button>
                 <button type="button" id="gmk_btn_yakin" style="flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white;">
@@ -82,7 +82,7 @@
 
     <script>
         let aksiKonfirmasiAktif = null;
-        function panggilModalKonfirmasi(judul, pesan, iconClass, warnaTema, teksTombol, aksiLanjutan) {
+        function panggilModalKonfirmasi(judul, pesan, iconClass, warnaTema, teksTombol, aksiLanjutan, teksBatal = 'Batal') {
             // Ganti Teks
             document.getElementById('gmk_title').innerText = judul;
             document.getElementById('gmk_message').innerHTML = pesan;
@@ -93,6 +93,15 @@
             document.getElementById('gmk_icon_bg').style.background = warnaTema + '20'; 
             document.getElementById('gmk_btn_yakin').style.background = warnaTema;
             document.getElementById('gmk_btn_yakin').innerHTML = teksTombol;
+
+            // Jika teksBatal null atau kosong, sembunyikan tombol batal (mode pesan/alert)
+            const btnBatal = document.getElementById('gmk_btn_batal');
+            if (!teksBatal) {
+                btnBatal.style.display = 'none';
+            } else {
+                btnBatal.style.display = 'block';
+                btnBatal.innerText = teksBatal;
+            }
 
             // Tampilkan Modal
             document.getElementById('global_modal_konfirmasi').style.display = 'flex';

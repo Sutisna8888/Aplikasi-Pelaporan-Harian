@@ -221,32 +221,6 @@
 
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    const fontSize = Math.max(12, Math.floor(width * 0.03)); 
-                    ctx.font = "bold " + fontSize + "px Arial"; 
-                    
-                    const shadowSize = Math.max(1, Math.floor(fontSize * 0.1));
-                    ctx.shadowColor = "rgba(0, 0, 0, 0.8)"; 
-                    ctx.shadowBlur = shadowSize * 2;
-                    ctx.shadowOffsetX = shadowSize;
-                    ctx.shadowOffsetY = shadowSize;
-
-                    const sekarang = new Date();
-                    const formatWaktu = sekarang.toLocaleDateString('id-ID') + ' ' + sekarang.toLocaleTimeString('id-ID');
-                    
-                    const inputLokasi = document.getElementById('lokasi_teks');
-                    const lokasi = inputLokasi ? inputLokasi.value : "Kantor BPS Kota Sukabumi";
-                    
-                    const marginKiri = Math.floor(width * 0.03); 
-                    const marginBawah = height;
-                    const spasiBaris = fontSize * 1.5; 
-
-                    ctx.fillStyle = "#fbbf24"; 
-                    ctx.fillText("ALPHA-BPS Kota Sukabumi", marginKiri, marginBawah - (spasiBaris * 2.8));
-                    
-                    ctx.fillStyle = "#ffffff"; 
-                    ctx.fillText( lokasi, marginKiri, marginBawah - (spasiBaris * 1.6));
-                    ctx.fillText(formatWaktu, marginKiri, marginBawah - (spasiBaris * 0.6));
-
                     const base64Data = canvas.toDataURL('image/jpeg', 0.75);
                     targetInputBase64.value = base64Data; 
 

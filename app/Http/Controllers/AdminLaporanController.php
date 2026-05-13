@@ -25,26 +25,23 @@ class AdminLaporanController extends Controller
         if ($search) {
             $searchedUser = User::where('role', 'pegawai')
                 ->where(function ($q) use ($search) {
-                    $q->where('username', 'LIKE', "%{$search}%")
-                        ->orWhere('nip', 'LIKE', "%{$search}%");
+                    $q->where('username', $search)
+                        ->orWhere('nip', $search);
                 })->first();
 
-            if ($searchedUser) {
-                $query = Laporan::with('kegiatan')
+            if ($searchedUser && $tanggal) {
+                $laporans = Laporan::with('kegiatan')
                     ->where('user_id', $searchedUser->id)
-                    ->where('status', 'selesai'); 
-
-                if ($tanggal) {
-                    $query->whereDate('tanggal', $tanggal);
-                }
-
-                $laporans = $query->orderBy('tanggal', 'desc')->orderBy('jam_mulai', 'desc')->get();
+                    ->where('status', 'selesai')
+                    ->whereDate('tanggal', $tanggal)
+                    ->orderBy('tanggal', 'desc')
+                    ->orderBy('jam_mulai', 'desc')
+                    ->get();
             }
         }
 
         return view('admin.kelola-laporan', compact('searchedUser', 'laporans', 'search', 'bulan', 'tanggal'));
     }
-
     public function downloadRekap(Request $request)
     {
         $userId = $request->input('user_id');
@@ -84,5 +81,20 @@ class AdminLaporanController extends Controller
         $pdf = Pdf::loadView('admin.pdf-individu', compact('laporan'));
 
         return $pdf->download('Bukti_Foto_'.$laporan->user->username.'_'.Carbon::parse($laporan->tanggal)->format('Ymd').'.pdf');
+    }
+
+    public function searchUsers(Request $request)
+    {
+        $q = $request->input('q');
+        $users = User::where('role', 'pegawai')
+            ->where(function($query) use ($q) {
+                $query->where('username', 'LIKE', "%{$q}%")
+                      ->orWhere('nip', 'LIKE', "%{$q}%");
+            })
+            ->select('username', 'nip')
+            ->limit(7)
+            ->get();
+            
+        return response()->json($users);
     }
 }
