@@ -75,7 +75,7 @@
     }
 </style>
 
-<div class="bg-white rounded-xl shadow-sm overflow-hidden mb-8 border border-gray-100">
+<div class="bg-white rounded-xl shadow-sm overflow-hidden mb-8 border border-gray-100" style="margin-top: -30px;">
     
     <div class="hero-bg flex flex-col md:flex-row relative min-h-[450px]">
         <div class="md:w-5/12 p-10 md:p-14 flex flex-col justify-center z-20">

@@ -51,16 +51,18 @@ class AdminLaporanController extends Controller
         $user = User::findOrFail($userId);
         $query = Laporan::with('kegiatan')->where('user_id', $user->id)->where('status', 'selesai');
 
-        $periode = '';
+        $formatTanggalFile = '';
         if ($tipe === 'harian' && $tanggal) {
             $query->whereDate('tanggal', $tanggal);
             $periode = Carbon::parse($tanggal)->translatedFormat('d F Y');
+            $formatTanggalFile = Carbon::parse($tanggal)->translatedFormat('d_F_Y');
             $judul = 'LAPORAN HARIAN';
         } elseif ($tipe === 'bulanan' && $bulan) {
             $parts = explode('-', $bulan);
             if (count($parts) == 2) {
                 $query->whereYear('tanggal', $parts[0])->whereMonth('tanggal', $parts[1]);
                 $periode = Carbon::parse($bulan.'-01')->translatedFormat('F Y');
+                $formatTanggalFile = Carbon::parse($bulan.'-01')->translatedFormat('F_Y');
             }
             $judul = 'LAPORAN BULANAN';
         } else {
@@ -71,7 +73,7 @@ class AdminLaporanController extends Controller
 
         $pdf = Pdf::loadView('admin.pdf-rekap', compact('user', 'laporans', 'judul', 'periode'));
 
-        return $pdf->download('Rekap_'.$tipe.'_'.$user->username.'_'.time().'.pdf');
+        return $pdf->download('laporan_' . strtolower(str_replace(' ', '_', $user->username)) . '_' . $formatTanggalFile . '.pdf');
     }
 
     public function downloadIndividu($id)
@@ -80,7 +82,13 @@ class AdminLaporanController extends Controller
 
         $pdf = Pdf::loadView('admin.pdf-individu', compact('laporan'));
 
-        return $pdf->download('Bukti_Foto_'.$laporan->user->username.'_'.Carbon::parse($laporan->tanggal)->format('Ymd').'.pdf');
+        $namaKegiatan = $laporan->kegiatan ? str_replace(' ', '_', $laporan->kegiatan->nama_kegiatan) : 'Lainnya';
+        $namaUser = strtolower($laporan->user->username);
+        $formatTanggal = Carbon::parse($laporan->tanggal)->translatedFormat('d_F_Y');
+        
+        $filename = 'foto_' . $namaKegiatan . '_' . $namaUser . '_' . $formatTanggal . '.pdf';
+
+        return $pdf->download($filename);
     }
 
     public function searchUsers(Request $request)

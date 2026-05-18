@@ -27,6 +27,9 @@ Route::get('/admin/dashboard', [AdminController::class, 'index'])
 Route::get('/admin/pengguna', [UserController::class, 'index'])
     ->middleware(['auth', 'verified', 'admin'])
     ->name('admin.pengguna.index');
+Route::get('/admin/pengguna/search-users', [UserController::class, 'searchAllUsers'])
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('admin.pengguna.searchUsers');
 Route::post('/admin/pengguna', [UserController::class, 'store'])
     ->middleware(['auth', 'verified', 'admin'])
     ->name('admin.pengguna.store');

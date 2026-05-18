@@ -103,4 +103,16 @@ class UserController extends Controller
 
         return redirect()->route('admin.pengguna.index')->with('success', 'Pengguna berhasil dihapus!');
     }
+
+    public function searchAllUsers(Request $request)
+    {
+        $q = $request->input('q');
+        $users = User::where('username', 'LIKE', "%{$q}%")
+            ->orWhere('nip', 'LIKE', "%{$q}%")
+            ->select('username', 'nip')
+            ->limit(7)
+            ->get();
+            
+        return response()->json($users);
+    }
 }

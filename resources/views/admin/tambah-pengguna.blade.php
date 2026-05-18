@@ -124,17 +124,14 @@
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 25px;">
-                <div>
-                    <!-- Hidden file input triggered by the green button -->
-                    <input type="file" id="ttd_upload" name="ttd" accept="image/*" style="display: none;">
-                    <button type="button" class="btn-upload-ttd" onclick="document.getElementById('ttd_upload').click();">
-                        Upload Spesimen Tandatangan <i class="fas fa-arrow-alt-circle-up"></i>
-                    </button>
-                    <div id="file-name-display" style="font-size: 0.8rem; color: #6b7280; margin-top: 5px;"></div>
-                </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px;">
+                <!-- Hidden file input triggered by the green button -->
+                <input type="file" id="ttd_upload" name="ttd" accept="image/*" style="display: none;">
+                <button type="button" id="btn_ttd_upload" class="btn-upload-ttd" onclick="document.getElementById('ttd_upload').click();">
+                    <span id="ttd_btn_text">Upload Tandatangan</span> <i class="fas fa-arrow-alt-circle-up"></i>
+                </button>
                 
-                <button type="submit" class="btn-save" style="padding: 10px 25px;">
+                <button type="submit" class="btn-save" style="padding: 10px 25px; margin: 0; height: 100%;">
                     <i class="fas fa-plus"></i> Tambah
                 </button>
             </div>
@@ -143,10 +140,13 @@
 </div>
 
 <script>
-    // Menampilkan nama file yang dipilih
+    // Menampilkan nama file pada tombol upload
     document.getElementById('ttd_upload').addEventListener('change', function(e) {
-        var fileName = e.target.files[0] ? e.target.files[0].name : '';
-        document.getElementById('file-name-display').textContent = fileName;
+        var fileName = e.target.files[0] ? e.target.files[0].name : 'Upload Tandatangan';
+        if (fileName.length > 25 && fileName !== 'Upload Tandatangan') {
+            fileName = fileName.substring(0, 22) + '...';
+        }
+        document.getElementById('ttd_btn_text').textContent = fileName;
     });
 
     // Jika ada error validasi pada form Tambah Pengguna (bukan form Edit/PUT)

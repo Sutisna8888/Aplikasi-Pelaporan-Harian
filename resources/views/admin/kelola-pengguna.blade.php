@@ -46,6 +46,49 @@
             position: absolute;
             left: 15px;
             color: #9ca3af;
+            z-index: 2;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+            display: none;
+        }
+
+        .autocomplete-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background 0.2s;
+            text-align: left;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover {
+            background: #f3f4f6;
+        }
+
+        .autocomplete-item-name {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .autocomplete-item-nip {
+            font-size: 0.85rem;
+            color: #6b7280;
         }
 
         .btn-cari {
@@ -111,7 +154,10 @@
       
         }
 
-        .table-pengguna td:nth-child(2) {
+        .table-pengguna td:nth-child(2),
+        .table-pengguna td:nth-child(3),
+        .table-pengguna td:nth-child(4),
+        .table-pengguna td:nth-child(5) {
             text-align: left;
         }
 
@@ -246,10 +292,17 @@
 
     <div class="pengguna-panel">
         <div class="panel-header-flex">
-            <form action="{{ route('admin.pengguna.index') }}" method="GET" class="search-box">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" name="search" class="search-input" placeholder="Cari pengguna"
-                    value="{{ request('search') }}">
+            <form action="{{ route('admin.pengguna.index') }}" method="GET" class="search-box" id="filterForm">
+                <div style="position: relative; display: inline-block;">
+                    <i class="fas fa-search search-icon" style="top: 50%; transform: translateY(-50%);"></i>
+                    <input type="text" name="search" id="search" class="search-input" placeholder="Cari pengguna"
+                        value="{{ request('search') }}" autocomplete="off" style="padding-right: 35px;">
+                    <button type="button" id="clearSearchBtn" title="Reset Pencarian"
+                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: #9ca3af; cursor: pointer; display: {{ request('search') ? 'block' : 'none' }}; padding: 0; outline: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div id="autocomplete-results" class="autocomplete-dropdown"></div>
+                </div>
                 <button type="submit" class="btn-cari">Cari</button>
             </form>
 
@@ -299,7 +352,9 @@
                             <td>{{ ucfirst($user->role) }}</td>
                             <td>
                                 @if($user->ttd)
-                                    <img src="{{ asset('storage/' . $user->ttd) }}" alt="TTD" style="height: 30px; display: block; margin: 0 auto;">
+                                    <a href="javascript:void(0)" onclick="openModalFoto('{{ asset('storage/' . $user->ttd) }}')" title="Lihat Tanda Tangan" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                        <img src="{{ asset('storage/' . $user->ttd) }}" alt="TTD" style="height: 30px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; display: block; margin: 0 auto;">
+                                    </a>
                                 @else
                                     <span style="color: #9ca3af; font-style: italic; font-size: 0.65rem;">Belum ada</span>
                                 @endif
@@ -355,4 +410,88 @@
     @include('admin.tambah-pengguna')
     @include('admin.edit-pengguna')
 
+    <!-- Modal Foto Tanda Tangan -->
+    <div id="modalFoto" class="modal-overlay" style="z-index: 10000; background: rgba(0,0,0,0.85) !important; backdrop-filter: blur(5px);" onclick="closeModalFoto(event)">
+        <div style="position: relative; max-width: 80%; text-align: center;">
+            <button type="button" onclick="document.getElementById('modalFoto').style.display='none'" style="position: absolute; top: -40px; right: -40px; color: white; background: none; border: none; font-size: 2rem; cursor: pointer; outline: none;">&times;</button>
+            <img id="modalFotoImage" src="" alt="Tanda Tangan" style="max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: block; margin: 0 auto;">
+        </div>
+    </div>
+
+    <script>
+        function openModalFoto(src) {
+            document.getElementById('modalFotoImage').src = src;
+            document.getElementById('modalFoto').style.display = 'flex';
+        }
+
+        function closeModalFoto(e) {
+            if (e.target.id === 'modalFoto') {
+                document.getElementById('modalFoto').style.display = 'none';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search');
+            const autocompleteResults = document.getElementById('autocomplete-results');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            let timeoutId;
+
+            searchInput.addEventListener('input', function () {
+                clearTimeout(timeoutId);
+                const query = this.value;
+
+                if (query.length > 0) {
+                    clearSearchBtn.style.display = 'block';
+                } else {
+                    clearSearchBtn.style.display = 'none';
+                }
+
+                if (query.length < 2) {
+                    autocompleteResults.style.display = 'none';
+                    return;
+                }
+
+                timeoutId = setTimeout(() => {
+                    fetch(`{{ route('admin.pengguna.searchUsers') }}?q=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            autocompleteResults.innerHTML = '';
+                            if (data.length > 0) {
+                                data.forEach(user => {
+                                    const item = document.createElement('div');
+                                    item.className = 'autocomplete-item';
+                                    item.innerHTML = `
+                                            <div class="autocomplete-item-name">${user.username}</div>
+                                            <div class="autocomplete-item-nip">NIP: ${user.nip}</div>
+                                        `;
+                                    item.addEventListener('click', () => {
+                                        searchInput.value = user.username;
+                                        autocompleteResults.style.display = 'none';
+                                        clearSearchBtn.style.display = 'block';
+                                    });
+                                    autocompleteResults.appendChild(item);
+                                });
+                                autocompleteResults.style.display = 'block';
+                            } else {
+                                autocompleteResults.style.display = 'none';
+                            }
+                        });
+                }, 300);
+            });
+            
+            if (clearSearchBtn) {
+                clearSearchBtn.addEventListener('click', function () {
+                    searchInput.value = '';
+                    clearSearchBtn.style.display = 'none';
+                    autocompleteResults.style.display = 'none';
+                    document.getElementById('filterForm').submit();
+                });
+            }
+            
+            document.addEventListener('click', function (e) {
+                if (!searchInput.contains(e.target) && !autocompleteResults.contains(e.target)) {
+                    autocompleteResults.style.display = 'none';
+                }
+            });
+        });
+    </script>
 @endsection

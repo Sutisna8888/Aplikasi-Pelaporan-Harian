@@ -14,7 +14,6 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-bottom: 20px;
         }
         .filter-row {
             display: flex;
@@ -84,6 +83,38 @@
         .autocomplete-item-nip {
             font-size: 0.85rem;
             color: #6b7280;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+            z-index: 100;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: #374151;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .dropdown-content.show {
+            display: block;
         }
 
         .date-input {
@@ -195,10 +226,10 @@
         <div class="filter-section">
             <form action="{{ route('admin.laporan.index') }}" method="GET" id="filterForm">
 
-                <div class="filter-row" style="margin-bottom: 15px;">
+                <div class="filter-row">
                     <label style="display: none;" for="search">Cari Pengguna</label>
-                    <div class="input-group">
-                        <div style="position: relative; flex: 1;">
+                    <div class="input-group" style="max-width: 100%;">
+                        <div style="position: relative; flex: 1; min-width: 250px; max-width: 400px;">
                             <input type="text" name="search" id="search" class="search-input"
                                 style="width: 100%; padding-right: 35px; box-sizing: border-box;"
                                 placeholder="Cari nama pengguna (username) atau NIP" value="{{ request('search') }}"
@@ -207,28 +238,23 @@
                                 style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: #9ca3af; cursor: pointer; display: {{ request('search') ? 'block' : 'none' }}; padding: 0; outline: none;">
                                 <i class="fas fa-times"></i>
                             </button>
+                            <div id="autocomplete-results" class="autocomplete-dropdown"></div>
                         </div>
-                        <button type="submit" class="btn-dark">Cari</button>
-                        <div id="autocomplete-results" class="autocomplete-dropdown"></div>
-                    </div>
-                </div>
-                <div class="filter-row" style="margin-bottom: 15px;">
-                    <label>Bulan</label>
-                    <div class="input-group">
-                        <input type="month" name="bulan" id="input_bulan" class="date-input" value="{{ request('bulan') }}">
-                        <button type="button" class="btn-dark btn-download" onclick="downloadRekap('bulanan')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
-                </div>
-                <div class="filter-row">
-                    <label>Tanggal</label>
-                    <div class="input-group">
+                        
                         <input type="date" name="tanggal" id="input_tanggal" class="date-input"
-                            value="{{ request('tanggal') }}" onchange="document.getElementById('filterForm').submit()">
-                        <button type="button" class="btn-dark btn-download" onclick="downloadRekap('harian')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
+                            value="{{ request('tanggal') }}" style="width: 160px; padding: 10px 15px; border-radius: 20px;">
+                            
+                        <button type="submit" class="btn-dark">Cari</button>
+                        
+                        <div style="position: relative; display: inline-block;">
+                            <button type="button" class="btn-dark btn-download" onclick="document.getElementById('downloadOptions').classList.toggle('show')">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <div id="downloadOptions" class="dropdown-content">
+                                <a href="javascript:void(0)" onclick="downloadRekap('harian')"><i class="fas fa-calendar-day" style="margin-right: 8px; width: 16px; text-align: center;"></i> Tanggal ini</a>
+                                <a href="javascript:void(0)" onclick="downloadRekap('bulanan')"><i class="fas fa-calendar-alt" style="margin-right: 8px; width: 16px; text-align: center;"></i> Bulan Ini</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -243,25 +269,38 @@
                 }
 
                 let url = '{{ route("admin.laporan.download") }}?user_id=' + userId + '&tipe=' + tipe;
+                const tanggal = document.getElementById('input_tanggal').value;
 
-                if (tipe === 'bulanan') {
-                    const bulan = document.getElementById('input_bulan').value;
-                    if (!bulan) {
-                        panggilModalKonfirmasi('Pilih Bulan', 'Silakan pilih Bulan terlebih dahulu!', 'fas fa-calendar-alt', '#374151', 'Mengerti', null, null);
-                        return;
-                    }
-                    url += '&bulan=' + bulan;
-                } else if (tipe === 'harian') {
-                    const tanggal = document.getElementById('input_tanggal').value;
+                if (tipe === 'harian') {
                     if (!tanggal) {
                         panggilModalKonfirmasi('Pilih Tanggal', 'Silakan pilih Tanggal terlebih dahulu!', 'fas fa-calendar-day', '#374151', 'Mengerti', null, null);
                         return;
                     }
                     url += '&tanggal=' + tanggal;
+                } else if (tipe === 'bulanan') {
+                    if (!tanggal) {
+                        panggilModalKonfirmasi('Pilih Tanggal', 'Silakan pilih Tanggal terlebih dahulu (untuk menentukan bulan)!', 'fas fa-calendar-day', '#374151', 'Mengerti', null, null);
+                        return;
+                    }
+                    const bulan = tanggal.substring(0, 7); // Mengambil format YYYY-MM
+                    url += '&bulan=' + bulan;
                 }
+
+                const dropdown = document.getElementById('downloadOptions');
+                if (dropdown) dropdown.classList.remove('show');
 
                 window.location.href = url;
             }
+
+            // Menutup dropdown jika diklik di luar tombol
+            window.addEventListener('click', function(e) {
+                if (!e.target.closest('.btn-download')) {
+                    var dropdown = document.getElementById("downloadOptions");
+                    if (dropdown && dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
+                }
+            });
         </script>
         <div class="laporan-panel">
             @if(request('search') && !$searchedUser)
@@ -279,16 +318,17 @@
                     </div>
                 @elseif($laporans->count() > 0)
                     <div style="margin-bottom: 15px; font-weight: 500; color: #374151;">
-                        Menampilkan laporan milik: <span style="color: #2563eb;">{{ $searchedUser->username }}</span>
+                        Menampilkan laporan: <span style="color: #2563eb;">{{ $searchedUser->username }}</span>
                     </div>
                     <div class="table-responsive">
                         <table class="table-laporan">
                             <thead>
                                 <tr>
                                     <th style="width: 60px;">No</th>
-                                    <th style="width: 150px;">Waktu</th>
+                                    <th class="text-left" style="width: 150px;">Waktu</th>
                                     <th class="text-left">Kegiatan</th>
-                                    <th>Deskripsi</th>
+                                    <th class="text-left">Deskripsi</th>
+                                    <th>Lokasi</th>
                                     <th style="width: 120px;">Bukti</th>
                                     <th style="width: 150px;">bukti bentuk pdf</th>
                                 </tr>
@@ -297,30 +337,30 @@
                                 @foreach ($laporans as $index => $laporan)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>
-                                            {{ substr($laporan->jam_mulai, 0, 5) }} -
-                                            {{ substr($laporan->jam_selesai, 0, 5) }} WIB
-                                            <br><small
-                                                style="color: #9ca3af;">{{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}</small>
+                                        <td class="text-left" style="color: #6b7280;">
+                                            {{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d F Y') }}<br>
+                                            <span style="font-weight: normal; color: #9ca3af;">{{ substr($laporan->jam_mulai, 0, 5) }} -
+                                            {{ substr($laporan->jam_selesai, 0, 5) }} WIB</span>
                                         </td>
-                                        <td class="text-left" style="color: #4b5563; font-weight: 500;">
+                                        <td class="text-left" style="color: #6b7280;">
                                             {{ $laporan->kegiatan ? $laporan->kegiatan->nama_kegiatan : '-' }}
                                         </td>
-                                        <td style="color: #6b7280;">{{ $laporan->deskripsi }}</td>
+                                        <td class="text-left" style="color: #6b7280;">{{ $laporan->deskripsi }}</td>
+                                        <td style="color: #6b7280;">{{ $laporan->lokasi_teks ?: '-' }}</td>
                                         <td>
                                             <div class="bukti-icons">
                                                 @if($laporan->foto_mulai)
                                                     <a href="javascript:void(0)"
                                                         onclick="openImageModal('{{ asset('storage/' . $laporan->foto_mulai) }}', 'Mulai', '{{ addslashes($searchedUser->username) }}', '{{ addslashes($laporan->kegiatan ? $laporan->kegiatan->nama_kegiatan : '-') }}', '{{ addslashes($laporan->deskripsi) }}', '{{ addslashes($laporan->lokasi_teks) }}', '{{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}', '{{ substr($laporan->jam_mulai, 0, 5) }} WIB')"
-                                                        title="Foto Mulai" style="color: #4b5563;">
-                                                        <i class="fas fa-image"></i>
+                                                        title="Foto Mulai" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                                        <img src="{{ asset('storage/' . $laporan->foto_mulai) }}" alt="Mulai" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                                                     </a>
                                                 @endif
                                                 @if($laporan->foto_selesai)
                                                     <a href="javascript:void(0)"
                                                         onclick="openImageModal('{{ asset('storage/' . $laporan->foto_selesai) }}', 'Selesai', '{{ addslashes($searchedUser->username) }}', '{{ addslashes($laporan->kegiatan ? $laporan->kegiatan->nama_kegiatan : '-') }}', '{{ addslashes($laporan->deskripsi) }}', '{{ addslashes($laporan->lokasi_teks) }}', '{{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}', '{{ substr($laporan->jam_selesai, 0, 5) }} WIB')"
-                                                        title="Foto Selesai" style="color: #4b5563;">
-                                                        <i class="fas fa-image"></i>
+                                                        title="Foto Selesai" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                                        <img src="{{ asset('storage/' . $laporan->foto_selesai) }}" alt="Selesai" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                                                     </a>
                                                 @endif
                                             </div>
@@ -380,23 +420,23 @@
                     </div>
                     <div>
                         <label
-                            style="display: block; font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Pegawai</label>
-                        <div id="info_pegawai" style="font-weight: 700; color: #1f2937; font-size: 1.05rem;">-</div>
+                            style="display: block; font-size: 0.7rem; color: #374151; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Pegawai</label>
+                        <div id="info_pegawai" style="color: #4b5563; font-size: 0.95rem; line-height: 1.4;">-</div>
                     </div>
                     <div>
                         <label
-                            style="display: block; font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Kegiatan</label>
-                        <div id="info_kegiatan" style="font-weight: 700; color: #1f2937; font-size: 1.05rem;">-</div>
+                            style="display: block; font-size: 0.7rem; color: #374151; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Kegiatan</label>
+                        <div id="info_kegiatan" style="color: #4b5563; font-size: 0.95rem; line-height: 1.4;">-</div>
                     </div>
                     <div>
                         <label
-                            style="display: block; font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Deskripsi</label>
+                            style="display: block; font-size: 0.7rem; color: #374151; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Deskripsi</label>
                         <div id="info_deskripsi" style="color: #4b5563; font-size: 0.95rem; line-height: 1.4;">-</div>
                     </div>
 
                     <div>
                         <label
-                            style="display: block; font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Tempat
+                            style="display: block; font-size: 0.7rem; color: #374151 text-transform: uppercase; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px;">Tempat
                             / Lokasi</label>
                         <div id="info_tempat" style="color: #4b5563; font-size: 0.95rem; line-height: 1.4;">-</div>
                     </div>
@@ -404,12 +444,12 @@
                         style="display: flex; gap: 30px; margin-top: auto; padding-top: 15px; border-top: 1px dashed #e5e7eb;">
                         <div>
                             <label
-                                style="display: block; font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 800; margin-bottom: 4px;">Tanggal</label>
+                                style="display: block; font-size: 0.7rem; color: #374151 text-transform: uppercase; font-weight: 800; margin-bottom: 4px;">Tanggal</label>
                             <div id="info_tanggal" style="color: #1f2937; font-weight: 600;">-</div>
                         </div>
                         <div>
                             <label
-                                style="display: block; font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 800; margin-bottom: 4px;">Waktu</label>
+                                style="display: block; font-size: 0.7rem; color: #374151 text-transform: uppercase; font-weight: 800; margin-bottom: 4px;">Waktu</label>
                             <div id="info_waktu" style="color: #1f2937; font-weight: 600;">-</div>
                         </div>
                     </div>
@@ -422,7 +462,7 @@
                     Tutup
                 </button>
                 <button onclick="downloadCombinedImage()" class="btn-dark" style="border-radius: 25px; padding: 10px 25px;">
-                    <i class="fas fa-download"></i> Unduh Gabungan
+                    <i class="fas fa-download"></i> Unduh Foto
                 </button>
             </div>
         </div>

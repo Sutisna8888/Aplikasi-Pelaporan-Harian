@@ -65,6 +65,11 @@
             vertical-align: middle;
         }
 
+        .table-info th.text-left,
+        .table-info td.text-left {
+            text-align: left;
+        }
+
         .table-info th {
             background-color: #374151;
             color: #ffffff;
@@ -192,10 +197,6 @@
     </style>
 
     <div class="page-container">
-        <!-- Tambah Info Button -->
-        <button class="btn-tambah" onclick="openModalTambah()">
-            Tambah Info
-        </button>
 
         @if ($errors->any())
             <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; font-weight: 500;">
@@ -215,7 +216,12 @@
 
         <!-- Card Daftar Info -->
         <div class="info-panel">
-            <h2 class="panel-title">Daftar Info</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="panel-title" style="margin-bottom: 0;">Daftar Info</h2>
+                <button class="btn-tambah" onclick="openModalTambah()">
+                    <i class="fas fa-plus"></i> Tambah Info
+                </button>
+            </div>
 
             <div class="table-responsive">
                 <table class="table-info">
@@ -223,7 +229,7 @@
                         <tr>
                             <th style="width: 60px;">No</th>
                             <th style="width: 180px;">Tanggal</th>
-                            <th>Judul</th>
+                            <th class="text-left">Judul</th>
                             <th style="width: 150px;">Foto</th>
                             <th style="width: 100px;">Action</th>
                         </tr>
@@ -233,11 +239,11 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ \Carbon\Carbon::parse($info->tanggal)->translatedFormat('d F Y') }}</td>
-                            <td>{{ $info->judul }}</td>
+                            <td class="text-left" style="color: #4b5563;">{{ $info->judul }}</td>
                             <td>
                                 @if($info->foto)
-                                    <a href="javascript:void(0)" onclick="openModalFoto('{{ asset('storage/' . $info->foto) }}')" title="Lihat Foto">
-                                        <i class="fas fa-image icon-image" style="color: #3b82f6;"></i>
+                                    <a href="javascript:void(0)" onclick="openModalFoto('{{ asset('storage/' . $info->foto) }}')" title="Lihat Foto" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                        <img src="{{ asset('storage/' . $info->foto) }}" alt="Foto" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                                     </a>
                                 @else
                                     <i class="fas fa-image icon-image"></i>

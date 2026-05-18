@@ -205,10 +205,6 @@
     </style>
 
     <div class="page-container">
-        <!-- Tambah Kegiatan Button -->
-        <button class="btn-tambah" onclick="openModalTambah()">
-            Tambah Kegiatan
-        </button>
 
         @if ($errors->any())
             <div id="error-alert"
@@ -223,7 +219,12 @@
 
         <!-- Card Daftar Kegiatan -->
         <div class="kegiatan-panel">
-            <h2 class="panel-title">Daftar Kegiatan</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="panel-title" style="margin-bottom: 0;">Daftar Kegiatan</h2>
+                <button class="btn-tambah" onclick="openModalTambah()">
+                    <i class="fas fa-plus"></i> Tambah Kegiatan
+                </button>
+            </div>
 
             <div class="table-responsive">
                 <table class="table-kegiatan">
