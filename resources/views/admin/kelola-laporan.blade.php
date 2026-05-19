@@ -136,12 +136,34 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: background 0.2s;
+            transition: background 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
             text-decoration: none;
         }
 
         .btn-dark:hover {
             background: #1f2937;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .btn-cancel {
+            background: #f3f4f6;
+            color: #4b5563;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-cancel:hover {
+            background: #e6e9ec;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
         }
 
         .btn-download {
@@ -348,20 +370,64 @@
                                         <td class="text-left" style="color: #6b7280;">{{ $laporan->deskripsi }}</td>
                                         <td style="color: #6b7280;">{{ $laporan->lokasi_teks ?: '-' }}</td>
                                         <td>
-                                            <div class="bukti-icons">
-                                                @if($laporan->foto_mulai)
-                                                    <a href="javascript:void(0)"
-                                                        onclick="openImageModal('{{ asset('storage/' . $laporan->foto_mulai) }}', 'Mulai', '{{ addslashes($searchedUser->username) }}', '{{ addslashes($laporan->kegiatan ? $laporan->kegiatan->nama_kegiatan : '-') }}', '{{ addslashes($laporan->deskripsi) }}', '{{ addslashes($laporan->lokasi_teks) }}', '{{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}', '{{ substr($laporan->jam_mulai, 0, 5) }} WIB')"
-                                                        title="Foto Mulai" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                                                        <img src="{{ asset('storage/' . $laporan->foto_mulai) }}" alt="Mulai" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                                    </a>
+                                            <div class="bukti-icons" style="display: flex; gap: 8px;">
+                                                @php
+                                                    $fotoMulaiUrl = '';
+                                                    $fotoSelesaiUrl = '';
+                                                    if ($laporan->foto_mulai) {
+                                                        $f = $laporan->foto_mulai;
+                                                        if (preg_match('/^https?:\/\//', $f) || str_starts_with($f, '/')) {
+                                                            $fotoMulaiUrl = $f;
+                                                        } elseif (strpos($f, '/') !== false) {
+                                                            $fotoMulaiUrl = asset('storage/' . $f);
+                                                        } else {
+                                                            $fotoMulaiUrl = asset('storage/foto_laporan/' . $f);
+                                                        }
+                                                    }
+                                                    if ($laporan->foto_selesai) {
+                                                        $f2 = $laporan->foto_selesai;
+                                                        if (preg_match('/^https?:\/\//', $f2) || str_starts_with($f2, '/')) {
+                                                            $fotoSelesaiUrl = $f2;
+                                                        } elseif (strpos($f2, '/') !== false) {
+                                                            $fotoSelesaiUrl = asset('storage/' . $f2);
+                                                        } else {
+                                                            $fotoSelesaiUrl = asset('storage/foto_laporan/' . $f2);
+                                                        }
+                                                    }
+                                                @endphp
+
+                                                @if($fotoMulaiUrl)
+                                                    <div style="position: relative;" title="Bukti Mulai">
+                                                        <a href="javascript:void(0)"
+                                                            onclick="openImageModal('{{ $fotoMulaiUrl }}', 'Mulai', '{{ addslashes($searchedUser->username) }}', '{{ addslashes($laporan->kegiatan ? $laporan->kegiatan->nama_kegiatan : '-') }}', '{{ addslashes($laporan->deskripsi) }}', '{{ addslashes($laporan->lokasi_teks) }}', '{{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}', '{{ substr($laporan->jam_mulai, 0, 5) }} WIB')"
+                                                            style="display: inline-block; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'">
+                                                            <img src="{{ $fotoMulaiUrl }}" alt="Mulai" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 2px solid #d1d5db; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                            <div style="display: none; width: 40px; height: 40px; background: #f3f4f6; border-radius: 6px; border: 2px dashed #d1d5db; align-items: center; justify-content: center; font-size: 1.2rem; color: #9ca3af;">
+                                                                <i class="fas fa-camera"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    <div style="width: 40px; height: 40px; background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #d1d5db; font-size: 1.2rem;" title="Belum ada bukti mulai">
+                                                        <i class="fas fa-image"></i>
+                                                    </div>
                                                 @endif
-                                                @if($laporan->foto_selesai)
-                                                    <a href="javascript:void(0)"
-                                                        onclick="openImageModal('{{ asset('storage/' . $laporan->foto_selesai) }}', 'Selesai', '{{ addslashes($searchedUser->username) }}', '{{ addslashes($laporan->kegiatan ? $laporan->kegiatan->nama_kegiatan : '-') }}', '{{ addslashes($laporan->deskripsi) }}', '{{ addslashes($laporan->lokasi_teks) }}', '{{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}', '{{ substr($laporan->jam_selesai, 0, 5) }} WIB')"
-                                                        title="Foto Selesai" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                                                        <img src="{{ asset('storage/' . $laporan->foto_selesai) }}" alt="Selesai" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                                    </a>
+
+                                                @if($fotoSelesaiUrl)
+                                                    <div style="position: relative;" title="Bukti Selesai">
+                                                        <a href="javascript:void(0)"
+                                                            onclick="openImageModal('{{ $fotoSelesaiUrl }}', 'Selesai', '{{ addslashes($searchedUser->username) }}', '{{ addslashes($laporan->kegiatan ? $laporan->kegiatan->nama_kegiatan : '-') }}', '{{ addslashes($laporan->deskripsi) }}', '{{ addslashes($laporan->lokasi_teks) }}', '{{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}', '{{ substr($laporan->jam_selesai, 0, 5) }} WIB')"
+                                                            style="display: inline-block; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'">
+                                                            <img src="{{ $fotoSelesaiUrl }}" alt="Selesai" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 2px solid #d1d5db; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                            <div style="display: none; width: 40px; height: 40px; background: #f3f4f6; border-radius: 6px; border: 2px dashed #d1d5db; align-items: center; justify-content: center; font-size: 1.2rem; color: #9ca3af;">
+                                                                <i class="fas fa-camera"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    <div style="width: 40px; height: 40px; background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #d1d5db; font-size: 1.2rem;" title="Belum ada bukti selesai">
+                                                        <i class="fas fa-image"></i>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </td>
@@ -457,8 +523,7 @@
             </div>
 
             <div style="display: flex; gap: 15px; width: 100%; justify-content: flex-end;">
-                <button onclick="document.getElementById('imagePreviewModal').style.display='none'"
-                    style="padding: 10px 25px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: background 0.2s;">
+                <button onclick="document.getElementById('imagePreviewModal').style.display='none'" class="btn-cancel">
                     Tutup
                 </button>
                 <button onclick="downloadCombinedImage()" class="btn-dark" style="border-radius: 25px; padding: 10px 25px;">

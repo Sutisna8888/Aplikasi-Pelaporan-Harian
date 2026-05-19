@@ -191,6 +191,13 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: #e5e7eb;
+            color: #374151;
+            transform: translateY(-1px);
         }
 
         .btn-save {
@@ -201,6 +208,12 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-save:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
         }
     </style>
 

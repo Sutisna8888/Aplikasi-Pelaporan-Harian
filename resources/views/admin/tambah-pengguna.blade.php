@@ -68,9 +68,34 @@
                     display: inline-flex;
                     align-items: center;
                     gap: 8px;
+                    transition: background 0.15s ease, transform 0.12s ease;
                 }
                 .btn-upload-ttd:hover {
                     background-color: #4ade80;
+                    transform: translateY(-2px);
+                }
+
+                /* Submit button for modal - hover effects */
+                .btn-save {
+                    background: #374151;
+                    color: #fff;
+                    border: none;
+                    padding: 10px 25px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    transition: background 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+                }
+                .btn-save:hover {
+                    background: #2f3842;
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 20px rgba(47,56,66,0.15);
+                }
+                .btn-save:active {
+                    transform: translateY(0);
                 }
             </style>
 

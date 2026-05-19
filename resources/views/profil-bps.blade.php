@@ -85,8 +85,10 @@
                 Badan Pusat Statistik Kota Sukabumi menyediakan data statistik yang akurat, terpercaya, dan terkini untuk mendukung pembangunan daerah.
             </p>
             <div>
-                <a href="https://sukabumikota.bps.go.id/" target="_blank" class="inline-block bg-[#1e40af] text-white px-8 py-3 rounded-md hover:bg-blue-900 transition-colors duration-200 font-medium shadow-md">
-                    Pelajari Lebih Lanjut
+                <a href="https://sukabumikota.bps.go.id/" target="_blank" class="inline-block bg-[#1e40af] text-white px-8 py-3 rounded-md hover:bg-blue-900 transition-colors duration-200 font-medium shadow-md flex items-center gap-2">
+                    <i class="fas fa-globe"></i>
+                    Website BPS Kota Sukabumi
+                    <i class="fas fa-external-link-alt text-sm"></i>
                 </a>
             </div>
         </div>

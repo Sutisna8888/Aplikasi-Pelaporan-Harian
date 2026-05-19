@@ -1,4 +1,4 @@
-@extends('layouts.master')
+`@extends('layouts.master')
 
 @section('title', 'Kelola Pengguna - ALPHA')
 @section('header_title', 'Kelola Pengguna')
@@ -351,12 +351,26 @@
                             <td>{{ $user->jabatan ?? '-' }}</td>
                             <td>{{ ucfirst($user->role) }}</td>
                             <td>
-                                @if($user->ttd)
-                                    <a href="javascript:void(0)" onclick="openModalFoto('{{ asset('storage/' . $user->ttd) }}')" title="Lihat Tanda Tangan" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
-                                        <img src="{{ asset('storage/' . $user->ttd) }}" alt="TTD" style="height: 30px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; display: block; margin: 0 auto;">
+                                @php
+                                    $ttdUrl = '';
+                                    if ($user->ttd) {
+                                        $u = $user->ttd;
+                                        if (preg_match('/^https?:\/\//', $u) || str_starts_with($u, '/')) {
+                                            $ttdUrl = $u;
+                                        } elseif (strpos($u, '/') !== false) {
+                                            $ttdUrl = asset('storage/' . $u);
+                                        } else {
+                                            $ttdUrl = asset('storage/ttd/' . $u);
+                                        }
+                                    }
+                                @endphp
+
+                                @if($ttdUrl)
+                                    <a href="javascript:void(0)" onclick="openModalFoto('{{ $ttdUrl }}')" title="Lihat Tanda Tangan" style="display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                        <img src="{{ $ttdUrl }}" alt="TTD" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: block; margin: 0 auto;">
                                     </a>
                                 @else
-                                    <span style="color: #9ca3af; font-style: italic; font-size: 0.65rem;">Belum ada</span>
+                                    <i class="fas fa-image" style="color: #9ca3af; font-size: 1.1rem;"></i>
                                 @endif
                             </td>
                             <td>
