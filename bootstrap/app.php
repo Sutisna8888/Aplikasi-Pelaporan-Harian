@@ -17,10 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->redirectGuestsTo(function (Illuminate\Http\Request $request) {
-            if ($request->is('admin*')) {
-                return route('login.admin');
-            }
-            return route('login.user');
+            return route('login');
         });
     })
     ->withExceptions(function (Exceptions $exceptions): void {

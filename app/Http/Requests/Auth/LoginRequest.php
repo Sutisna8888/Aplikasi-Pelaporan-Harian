@@ -59,21 +59,6 @@ class LoginRequest extends FormRequest
                 'login_id' => trans('auth.failed'),
             ]);
         }
-        // --- LOGIKA BARU: CEK ROLE TOMBOL ---
-        $expectedRole = $this->input('role_login'); // Menangkap value dari tombol yang ditekan (admin/user)
-        $actualRole = Auth::user()->role;           // Mengambil role asli dari database
-
-        // Jika pegawai mencoba menekan tombol admin, atau sebaliknya
-        if ($expectedRole !== $actualRole) {
-            Auth::logout(); // Keluarkan lagi secara paksa
-            request()->session()->invalidate();
-            request()->session()->regenerateToken();
-
-            throw ValidationException::withMessages([
-                'login_id' => 'Gagal masuk. Pastikan Anda menekan tombol login yang sesuai dengan tipe akun Anda.',
-            ]);
-        }
-
         RateLimiter::clear($this->throttleKey());
     }
 

@@ -145,10 +145,8 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ \Carbon\Carbon::parse($laporan->tanggal)->translatedFormat('d M Y') }}</td>
-                    <td>
-                        {{ substr($laporan->jam_mulai, 0, 5) }} -
-                        <br>
-                        {{ substr($laporan->jam_selesai, 0, 5) }}
+                    <td class="text-left" style="white-space: nowrap;">
+                        {{ substr($laporan->jam_mulai, 0, 5) }} - {{ substr($laporan->jam_selesai, 0, 5) }}
                     </td>
                     <td class="text-left">{{ $laporan->kegiatan->nama_kegiatan ?? '-' }}</td>
                     <td class="text-left">{{ $laporan->deskripsi }}</td>

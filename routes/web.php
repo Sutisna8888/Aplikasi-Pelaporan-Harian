@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('login.admin');
+    return redirect()->route('login');
 });
 
 // Rute Dashboard diarahkan ke Controller

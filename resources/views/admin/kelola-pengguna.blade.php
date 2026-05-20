@@ -370,7 +370,7 @@
                                         <img src="{{ $ttdUrl }}" alt="TTD" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: block; margin: 0 auto;">
                                     </a>
                                 @else
-                                    <i class="fas fa-image" style="color: #9ca3af; font-size: 1.1rem;"></i>
+                                    <span style="color: #9ca3af; font-style: italic; font-size: 0.85rem;">Belum ada</span>
                                 @endif
                             </td>
                             <td>

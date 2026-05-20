@@ -19,21 +19,6 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * Display the admin login view.
-     */
-    public function createAdmin(): View
-    {
-        return view('auth.login-admin');
-    }
-
-    /**
-     * Display the user login view.
-     */
-    public function createUser(): View
-    {
-        return view('auth.login-user');
-    }
 
     /**
      * Handle an incoming authentication request.
@@ -51,29 +36,6 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
-    /**
-     * Handle an incoming admin authentication request.
-     */
-    public function storeAdmin(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('admin.dashboard', absolute: false));
-    }
-
-    /**
-     * Handle an incoming user authentication request.
-     */
-    public function storeUser(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
-    }
 
     /**
      * Destroy an authenticated session.

@@ -197,11 +197,8 @@
 
                 <!-- Tombol -->
                 <div class="btn-container">
-                    <button type="submit" name="role_login" value="admin" class="btn-green">
-                        Login Admin
-                    </button>
-                    <button type="submit" name="role_login" value="pegawai" class="btn-green">
-                        Login User
+                    <button type="submit" class="btn-green">
+                        Login
                     </button>
                 </div>
             </form>
