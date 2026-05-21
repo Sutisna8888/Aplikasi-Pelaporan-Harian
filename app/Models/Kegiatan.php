@@ -12,7 +12,9 @@ class Kegiatan extends Model
         'is_active' => 'boolean',
     ];
 
-    // Relasi: Satu jenis kegiatan bisa muncul di banyak laporan
+    /**
+     * Relasi ke model Laporan.
+     */
     public function laporans()
     {
         return $this->hasMany(Laporan::class);

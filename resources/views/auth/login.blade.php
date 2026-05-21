@@ -1,6 +1,5 @@
 <x-guest-layout>
     <style>
-        /* CSS Murni untuk Background Full Layar */
         .login-page-wrapper {
             position: fixed;
             top: 0;
@@ -30,7 +29,6 @@
             height: 70px;
             margin-bottom: 10px;
             margin-top: 20px;
-            /* spacing dari teks di bawahnya */
         }
 
         .login-card h1 {
@@ -38,7 +36,6 @@
             margin-top: 0.5rem;
             margin-bottom: 0.1rem;
             color: #4b5563;
-            /* gray-600 */
         }
 
         .login-card p {
@@ -46,7 +43,6 @@
             color: #6b7280;
         }
 
-        /* Input Styling */
         .input-group {
             position: relative;
             margin-bottom: 1rem;
@@ -69,11 +65,10 @@
         .custom-input {
             width: 100%;
             box-sizing: border-box;
-            /* Prevent padding from expanding width */
             background-color: #ededed;
             border: 1px solid #ededed;
             border-radius: 10px;
-            padding: 0.7rem 1.25rem 0.7rem 3.2rem; /* Atas dan bawah dibuat sama agar teks berada di tengah vertikal */
+            padding: 0.7rem 1.25rem 0.7rem 3.2rem;
             font-size: 1rem;
             color: #4b5563;
             transition: all 0.2s;
@@ -90,7 +85,6 @@
             box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
         }
 
-        /* Tombol Hijau */
         .btn-container {
             display: flex;
             gap: 20px;
@@ -119,7 +113,6 @@
             background-color: #22c55e;
         }
 
-        /* Error Alert Styling */
         .error-alert {
             display: flex;
             align-items: center;
@@ -151,7 +144,6 @@
                 <img src="{{ asset('images/logo_bps.png') }}" alt="Logo BPS" class="h-12 mx-auto">
             </div>
 
-            <!-- Header Teks -->
             <div class="mb-2">
                 <p class="text-base font-bold text-gray-500 uppercase leading-tight">
                     BADAN PUSAT STATISTIK<br>KOTA SUKABUMI
@@ -163,7 +155,6 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <!-- Pesan Error -->
                 @if ($errors->any())
                     <div class="error-alert">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -173,7 +164,6 @@
                     </div>
                 @endif
 
-                <!-- Login ID (Email/NIP) -->
                 <div class="input-group">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="input-icon">
                         <path fill-rule="evenodd"
@@ -184,7 +174,6 @@
                         :value="old('login_id')" required autofocus />
                 </div>
 
-                <!-- Password -->
                 <div class="input-group">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="input-icon">
                         <path fill-rule="evenodd"
@@ -195,7 +184,6 @@
                         required />
                 </div>
 
-                <!-- Tombol -->
                 <div class="btn-container">
                     <button type="submit" class="btn-green">
                         Login

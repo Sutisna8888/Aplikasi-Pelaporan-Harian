@@ -13,13 +13,17 @@ class Laporan extends Model
         'longitude', 'lokasi_teks', 'keterangan', 'status',
     ];
 
-    // Relasi: Laporan ini punya siapa?
+    /**
+     * Relasi ke model User.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relasi: Laporan ini jenis kegiatannya apa?
+    /**
+     * Relasi ke model Kegiatan.
+     */
     public function kegiatan()
     {
         return $this->belongsTo(Kegiatan::class);

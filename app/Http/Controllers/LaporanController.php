@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 class LaporanController extends Controller
 {
     /**
-     * Menampilkan halaman Dashboard User dengan statistik dinamis.
+     * Menampilkan halaman dashboard user.
      */
     public function index()
     {
@@ -59,7 +59,7 @@ class LaporanController extends Controller
     }
 
     /**
-     * Halaman Riwayat: Menampilkan semua laporan hari ini.
+     * Menampilkan riwayat laporan hari ini.
      */
     public function history()
     {
@@ -91,7 +91,7 @@ class LaporanController extends Controller
     }
 
     /**
-     * TAHAP 1: Menyimpan awal kegiatan (Klik Mulai).
+     * Menyimpan data awal kegiatan laporan.
      */
     public function store(Request $request)
     {
@@ -118,7 +118,7 @@ class LaporanController extends Controller
     }
 
     /**
-     * TAHAP 2: Mengupdate laporan saat selesai (Klik Selesai).
+     * Menyelesaikan laporan kegiatan.
      */
     public function updateSelesai(Request $request, $id)
     {
@@ -145,7 +145,7 @@ class LaporanController extends Controller
     }
 
     /**
-     * Helper Method: Mendecode teks Base64 dan menyimpannya sebagai file.
+     * Mendecode teks Base64 dan menyimpannya sebagai file gambar.
      */
     private function saveBase64Image($base64String, $subfolder = 'foto_laporan')
     {

@@ -156,12 +156,11 @@
             to { transform: scale(1); opacity: 1; }
         }
 
-        /* --- Perbaikan Responsive Mobile --- */
         @media (max-width: 768px) {
             .section-panel {
                 padding: 20px 15px !important;
                 margin: 0 !important;
-                border-radius: 0 !important; /* Full width di HP lebih rapi */
+                border-radius: 0 !important;
                 box-shadow: none !important;
             }
 
@@ -169,7 +168,6 @@
                 font-size: 1.1rem;
             }
 
-            /* Perbaikan Tabel di HP */
             .section-panel table tr {
                 display: flex;
                 flex-direction: column;
@@ -182,12 +180,11 @@
                 padding: 2px 0 !important;
             }
             .section-panel table td:nth-child(2) {
-                display: none; /* Sembunyikan titik dua (:) */
+                display: none;
             }
 
-            /* Perbaikan Input & Select */
             select, input {
-                font-size: 16px !important; /* Mencegah auto-zoom di iOS */
+                font-size: 16px !important;
             }
         }
     </style>
@@ -231,9 +228,6 @@
             reader.readAsDataURL(file);
         }
 
-        // ================= LOGIKA JAVASCRIPT ALUR BARU DENGAN POP-UP =================
-
-        // --- 1. INISIALISASI ELEMEN TAHAP 1 (MULAI) ---
         const btnTriggerMulai = document.getElementById('btn_trigger_mulai');
         const btnBukaKameraMulai = document.getElementById('btn_buka_kamera_mulai');
         const inputFotoMulai = document.getElementById('input_foto_mulai');
@@ -242,19 +236,13 @@
         const inputLokasi = document.getElementById('lokasi_teks');
         const formTahap1 = document.getElementById('formTahap1');
 
-        // Elemen Modal Lokal (Hanya untuk Error Form)
-        const modalError = document.getElementById('modal_error');
-        const btnTutupError = document.getElementById('btn_tutup_error');
-
         if (btnTriggerMulai) {
-            // ALUR 1: Validasi awal sebelum ambil foto
             btnTriggerMulai.addEventListener('click', () => {
                 if (!document.getElementById('kegiatan_id').value || !document.getElementById('deskripsi').value) {
                     modalError.style.display = 'flex'; // Gunakan modal error lokal
                     return;
                 }
 
-                // Auto-fill Lokasi
                 if (!inputLokasi.value || inputLokasi.value.trim() === '') {
                     inputLokasi.value = "Kantor BPS Kota Sukabumi";
                 }
@@ -267,12 +255,10 @@
                 modalError.style.display = 'none';
             });
 
-            // ALUR 2: Buka Kamera
             btnBukaKameraMulai.addEventListener('click', () => {
                 inputFotoMulai.click();
             });
 
-            // ALUR 3: Proses Foto Mulai
             inputFotoMulai.addEventListener('change', function(e) {
                 btnBukaKameraMulai.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
                 prosesFotoWatermark(e.target.files[0], inputFotoMulaiBase64, function() {
@@ -283,14 +269,13 @@
                 });
             });
 
-            // ALUR 4: Konfirmasi Mulai (MENGGUNAKAN MODAL GLOBAL)
             btnSubmitMulai.addEventListener('click', function(e) {
                 e.preventDefault(); 
                 panggilModalKonfirmasi(
                     'Mulai Kegiatan?', 
                     'Anda yakin ingin memulai kegiatan ini?<br>Status laporan akan berubah menjadi <strong>"Sedang Berjalan"</strong>.', 
                     'fas fa-play', 
-                    '#2563eb', // Biru
+                    '#2563eb',
                     '<i class="fas fa-play"></i> Ya, Mulai', 
                     function() {
                         btnSubmitMulai.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
@@ -300,7 +285,6 @@
             });
         }
 
-        // --- 2. INISIALISASI ELEMEN TAHAP 2 (SELESAI) ---
         const btnBukaKameraSelesai = document.getElementById('btn_buka_kamera_selesai');
         const inputFotoSelesai = document.getElementById('input_foto_selesai');
         const btnSubmitSelesai = document.getElementById('btn_submit_selesai');
@@ -308,12 +292,10 @@
         const formTahap2 = document.getElementById('formTahap2'); 
 
         if (btnBukaKameraSelesai) {
-            // ALUR 1: Buka Kamera Selesai
             btnBukaKameraSelesai.addEventListener('click', () => {
                 inputFotoSelesai.click();
             });
 
-            // ALUR 2: Proses Foto Selesai
             inputFotoSelesai.addEventListener('change', function(e) {
                 btnBukaKameraSelesai.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
                 prosesFotoWatermark(e.target.files[0], inputFotoSelesaiBase64, function() {
@@ -324,14 +306,13 @@
                 });
             });
 
-            // ALUR 3: Konfirmasi Selesai (MENGGUNAKAN MODAL GLOBAL)
             btnSubmitSelesai.addEventListener('click', function(e) {
                 e.preventDefault();
                 panggilModalKonfirmasi(
                     'Kirim Laporan?', 
                     'Anda yakin mengakhiri kegiatan ini?<br>Data waktu dan foto akan dikirim ke server.', 
                     'fas fa-paper-plane', 
-                    '#10b981', // Hijau
+                    '#10b981',
                     '<i class="fas fa-check-circle"></i> Kirim Laporan', 
                     function() {
                         btnSubmitSelesai.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';

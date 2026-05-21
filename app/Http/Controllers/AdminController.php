@@ -7,6 +7,9 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
+    /**
+     * Menampilkan halaman dashboard admin.
+     */
     public function index()
     {
         $today = now()->format('Y-m-d');

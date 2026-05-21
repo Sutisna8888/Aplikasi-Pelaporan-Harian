@@ -1,14 +1,12 @@
 <style>
     .sidebar {
-        /* 1. PENGUNCIAN PERMANEN */
         width: 250px !important;
         min-width: 250px !important;
         max-width: 250px !important;
         flex-shrink: 0 !important;
         height: 100vh;
-        background: #24272bff; /* Disesuaikan dengan warna navbar (#2b3035) */
+        background: #24272bff; 
 
-        /* 2. LAYOUT ATAS-BAWAH */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -23,7 +21,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         padding: 20px 13px; 
-        background: transparent !important; /* Menghapus warna bawaan dari sidebar.css */
+        background: transparent !important; 
         border-bottom: 1px solid rgba(255,255,255,0.05); 
     }
 
@@ -69,7 +67,6 @@
         display: block;
     }
  
-    /* 3. PERSIAPAN MOBILE */
     @media (max-width: 768px) {
         .sidebar {
             position: fixed;

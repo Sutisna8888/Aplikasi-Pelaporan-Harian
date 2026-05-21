@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AdminLaporanController extends Controller
 {
     /**
-     * Menampilkan halaman Kelola Laporan Admin
+     * Menampilkan halaman kelola laporan admin.
      */
     public function index(Request $request)
     {
@@ -42,6 +42,9 @@ class AdminLaporanController extends Controller
 
         return view('admin.kelola-laporan', compact('searchedUser', 'laporans', 'search', 'bulan', 'tanggal'));
     }
+    /**
+     * Mengunduh rekap laporan dalam format PDF.
+     */
     public function downloadRekap(Request $request)
     {
         $userId = $request->input('user_id');
@@ -76,6 +79,9 @@ class AdminLaporanController extends Controller
         return $pdf->download('laporan_' . strtolower(str_replace(' ', '_', $user->username)) . '_' . $formatTanggalFile . '.pdf');
     }
 
+    /**
+     * Mengunduh laporan individu dalam format PDF.
+     */
     public function downloadIndividu($id)
     {
         $laporan = Laporan::with(['user', 'kegiatan'])->findOrFail($id);
@@ -91,6 +97,9 @@ class AdminLaporanController extends Controller
         return $pdf->download($filename);
     }
 
+    /**
+     * Mencari pengguna pegawai berdasarkan nama atau NIP.
+     */
     public function searchUsers(Request $request)
     {
         $q = $request->input('q');

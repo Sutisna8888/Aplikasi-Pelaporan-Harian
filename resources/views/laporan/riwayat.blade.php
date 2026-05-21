@@ -106,10 +106,10 @@
 
     .teks-tanggal-hari-ini {
         margin: 0;
-        padding: 0 0 10px 0; /* Memberi sedikit jarak bawah sebelum tabel */
-        color: #1f2937; /* Warna gelap yang elegan */
+        padding: 0 0 10px 0;
+        color: #1f2937;
         font-weight: bold;
-        font-size: 1.25rem; /* Ukuran yang pas untuk judul (sekitar 20px) */
+        font-size: 1.25rem;
     }
 
     .wrapper-tabel {
@@ -131,10 +131,9 @@
         background-color: #fafafa; 
     }
 
-    /* Mengatur Lebar Spesifik Setiap Kolom */
-    .table-custom th:nth-child(1) { width: 5%; }  /* Kolom No  */
-    .table-custom th:nth-child(2) { width: 15%; } /* Kolom Waktu  */
-    .table-custom th:nth-child(5) { width: 15%; } /* Kolom Bukti */
+    .table-custom th:nth-child(1) { width: 5%; }
+    .table-custom th:nth-child(2) { width: 15%; }
+    .table-custom th:nth-child(5) { width: 15%; }
 
     .btn-bukti {
         background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; 
@@ -143,7 +142,6 @@
     .btn-bukti:hover {
         background: #dbeafe; 
     }
-    /* --- 4. MEDIA QUERY (LAYAR HP) --- */
     @media (max-width: 768px) {
         .kotak-pembungkus { padding: 15px; border-radius: 12px; }
 
@@ -152,10 +150,9 @@
         color: #1f2937; 
         font-weight: bold;
         font-size: 1rem; 
-        margin-bottom: -15px; /* Memberi jarak bawah sebelum tabel */
+        margin-bottom: -15px;
         }
 
-        /* Mengubah kelengkungan tabel */
         .wrapper-tabel {
             border-radius: 4px; 
         }
@@ -166,14 +163,12 @@
             border-top-right-radius: 4px; 
         }
 
-        /*Mengecilkan teks di dalam tabel */
         .table-custom th, .table-custom td {
             font-size: 0.77rem; 
             padding: 10px 8px;  
         }
        
         .table-custem 
-        /* 2. Mengecilkan ukuran icon/tombol bukti */
         .btn-bukti {
             font-size: 0.90rem;
             padding: 5px 8px;

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    /**
+     * Menampilkan daftar pengguna.
+     */
     public function index(Request $request)
     {
         $query = User::query();
@@ -24,6 +27,9 @@ class UserController extends Controller
         return view('admin.kelola-pengguna', compact('users'));
     }
 
+    /**
+     * Menyimpan pengguna baru.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -54,6 +60,9 @@ class UserController extends Controller
         return redirect()->route('admin.pengguna.index')->with('success', 'Pengguna berhasil ditambahkan!');
     }
 
+    /**
+     * Memperbarui data pengguna.
+     */
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -91,6 +100,9 @@ class UserController extends Controller
         return redirect()->route('admin.pengguna.index')->with('success', 'Data pengguna berhasil diperbarui!');
     }
 
+    /**
+     * Menghapus pengguna.
+     */
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -104,6 +116,9 @@ class UserController extends Controller
         return redirect()->route('admin.pengguna.index')->with('success', 'Pengguna berhasil dihapus!');
     }
 
+    /**
+     * Mencari pengguna berdasarkan nama atau NIP.
+     */
     public function searchAllUsers(Request $request)
     {
         $q = $request->input('q');

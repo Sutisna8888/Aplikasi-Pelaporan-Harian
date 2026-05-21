@@ -45,13 +45,11 @@ class LoginRequest extends FormRequest
         // 2. Cek apakah formatnya angka (NIP)? Jika iya jadikan 'nip', jika tidak jadikan 'username'
         $fieldType = is_numeric($loginId) ? 'nip' : 'username';
 
-        // 3. Siapkan kunci untuk login
+        // 3. kunci untuk login
         $credentials = [
             $fieldType => $loginId,
             'password' => $this->input('password'),
         ];
-
-        // 4. Proses percobaannya
         if (! Auth::attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 

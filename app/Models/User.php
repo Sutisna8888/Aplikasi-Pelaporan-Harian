@@ -11,7 +11,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['nip', 'username', 'email', 'password', 'ttd', 'role', 'jabatan'])]
-// Sembunyikan data sensitif saat data user dipanggil (misal di API)
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -19,7 +18,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * Relasi: Satu User (Pegawai) bisa memiliki banyak Laporan.
+     * Relasi ke model Laporan.
      */
     public function laporans(): HasMany
     {
@@ -27,7 +26,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Pengaturan casting tipe data (Password otomatis di-hash).
+     * Pengaturan casting tipe data.
      *
      * @return array<string, string>
      */

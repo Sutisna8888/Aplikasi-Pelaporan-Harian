@@ -17,7 +17,6 @@
         </div>
     @else
         <!-- Header Lama (Dengan Logo untuk User Biasa) -->
-        <!-- Baris Pertama Header -->
         <div class="topbar-row-1">
             <div class="topbar-brand">
                 <button type="button" class="hamburger" id="menu-toggle" aria-label="Toggle menu">
@@ -34,7 +33,6 @@
             </form>
         </div>
         
-        <!-- Baris Kedua Header -->
         <div class="topbar-row-2">
             <h2>@yield('header_title', 'Dashboard') @if(auth()->check() && request()->routeIs('dashboard')) {{ auth()->user()->username }} @endif</h2>
         </div>

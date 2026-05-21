@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 class InfoBpsController extends Controller
 {
+    /**
+     * Menampilkan daftar informasi BPS.
+     */
     public function index()
     {
         $infos = InfoBps::orderBy('tanggal', 'desc')->get();
@@ -15,6 +18,9 @@ class InfoBpsController extends Controller
         return view('admin.info-bps', compact('infos'));
     }
 
+    /**
+     * Menyimpan informasi BPS baru.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -34,6 +40,9 @@ class InfoBpsController extends Controller
         return redirect()->route('admin.info-bps.index')->with('success', 'Info berhasil ditambahkan.');
     }
 
+    /**
+     * Menghapus informasi BPS.
+     */
     public function destroy($id)
     {
         $info = InfoBps::findOrFail($id);

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'ALPHA BPS')</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon_alpha.png') }}">
     
     <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -83,18 +84,15 @@
     <script>
         let aksiKonfirmasiAktif = null;
         function panggilModalKonfirmasi(judul, pesan, iconClass, warnaTema, teksTombol, aksiLanjutan, teksBatal = 'Batal') {
-            // Ganti Teks
             document.getElementById('gmk_title').innerText = judul;
             document.getElementById('gmk_message').innerHTML = pesan;
             document.getElementById('gmk_icon').className = iconClass;
             
-            // Ganti Tema Warna Dinamis 
             document.getElementById('gmk_icon').style.color = warnaTema;
             document.getElementById('gmk_icon_bg').style.background = warnaTema + '20'; 
             document.getElementById('gmk_btn_yakin').style.background = warnaTema;
             document.getElementById('gmk_btn_yakin').innerHTML = teksTombol;
 
-            // Jika teksBatal null atau kosong, sembunyikan tombol batal (mode pesan/alert)
             const btnBatal = document.getElementById('gmk_btn_batal');
             if (!teksBatal) {
                 btnBatal.style.display = 'none';
@@ -103,7 +101,6 @@
                 btnBatal.innerText = teksBatal;
             }
 
-            // Tampilkan Modal
             document.getElementById('global_modal_konfirmasi').style.display = 'flex';
             aksiKonfirmasiAktif = aksiLanjutan;
         }

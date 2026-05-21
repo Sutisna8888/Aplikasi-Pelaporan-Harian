@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class KegiatanController extends Controller
 {
+    /**
+     * Menampilkan daftar kegiatan.
+     */
     public function index()
     {
         $kegiatans = Kegiatan::orderBy('created_at', 'desc')->get();
@@ -14,6 +17,9 @@ class KegiatanController extends Controller
         return view('admin.kelola-kegiatan', compact('kegiatans'));
     }
 
+    /**
+     * Menyimpan kegiatan baru.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -27,11 +33,17 @@ class KegiatanController extends Controller
         return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil ditambahkan');
     }
 
+    /**
+     * Menampilkan form edit kegiatan.
+     */
     public function edit(Kegiatan $kegiatan)
     {
         return view('admin.edit-kegiatan', compact('kegiatan'));
     }
 
+    /**
+     * Memperbarui data kegiatan.
+     */
     public function update(Request $request, Kegiatan $kegiatan)
     {
         $request->validate([
@@ -45,6 +57,9 @@ class KegiatanController extends Controller
         return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil diupdate');
     }
 
+    /**
+     * Mengubah status aktif kegiatan.
+     */
     public function toggleActive(Kegiatan $kegiatan)
     {
         $kegiatan->update([
