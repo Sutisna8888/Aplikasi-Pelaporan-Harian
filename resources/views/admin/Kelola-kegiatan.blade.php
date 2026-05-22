@@ -66,7 +66,7 @@
         }
 
         .table-kegiatan th {
-            background-color: #374151; /* Match the design dark header */
+            background-color: #374151;
             color: #ffffff;
             font-weight: 600;
             border-color: #374151;

@@ -17,9 +17,11 @@ class UserController extends Controller
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
-            $query->where('username', 'like', "%{$search}%")
-                ->orWhere('nip', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('username', 'like', "%{$search}%")
+                    ->orWhere('nip', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
         }
 
         $users = $query->orderBy('id', 'asc')->get();
@@ -71,6 +73,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255',
             'nip' => 'required|string|max:255|unique:users,nip,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'nullable|string|min:8',
             'jabatan' => 'nullable|string|max:255',
             'role' => 'required|in:admin,pegawai',
             'ttd' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

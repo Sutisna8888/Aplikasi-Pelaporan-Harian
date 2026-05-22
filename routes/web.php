@@ -5,7 +5,6 @@ use App\Http\Controllers\AdminLaporanController;
 use App\Http\Controllers\InfoBpsController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,10 +79,6 @@ Route::delete('/admin/info-bps/{id}', [InfoBpsController::class, 'destroy'])
     ->name('admin.info-bps.destroy');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Profile
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::view('/profil-bps', 'profil-bps')->name('profil-bps');
 
     // Laporan (Pegawai)
@@ -91,6 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/laporan/simpan', [LaporanController::class, 'store'])->name('laporan.store');
     Route::get('/laporan/riwayat', [LaporanController::class, 'history'])->name('laporan.history');
     Route::put('/laporan/{id}/selesai', [LaporanController::class, 'updateSelesai'])->name('laporan.updateSelesai');
+    Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])->name('laporan.destroy');
 });
 
 require __DIR__.'/auth.php';

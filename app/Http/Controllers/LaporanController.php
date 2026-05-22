@@ -8,7 +8,7 @@ use App\Models\Laporan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
@@ -101,7 +101,7 @@ class LaporanController extends Controller
             'foto_mulai_base64' => 'required|string',
         ]);
 
-        $path_mulai = $this->saveBase64Image($request->foto_mulai_base64);
+        $path_mulai = $this->saveBase64Image($request->foto_mulai_base64, 'foto_mulai_base64');
 
         Laporan::create([
             'user_id' => Auth::id(),
@@ -126,13 +126,13 @@ class LaporanController extends Controller
             'foto_selesai_base64' => 'required|string',
         ]);
 
-        $laporan = Laporan::findOrFail($id);
+        $laporan = Laporan::where('user_id', Auth::id())->findOrFail($id);
 
         $jam_mulai = Carbon::parse($laporan->jam_mulai);
         $jam_selesai = Carbon::now();
         $durasi = $jam_mulai->diffInMinutes($jam_selesai);
 
-        $path_selesai = $this->saveBase64Image($request->foto_selesai_base64);
+        $path_selesai = $this->saveBase64Image($request->foto_selesai_base64, 'foto_selesai_base64');
 
         $laporan->update([
             'jam_selesai' => $jam_selesai->format('H:i:s'),
@@ -145,28 +145,93 @@ class LaporanController extends Controller
     }
 
     /**
-     * Mendecode teks Base64 dan menyimpannya sebagai file gambar.
+     * Membatalkan kegiatan berjalan (menghapus laporan berjalan beserta fotonya).
      */
-    private function saveBase64Image($base64String, $subfolder = 'foto_laporan')
+    public function destroy($id)
     {
-        if (! $base64String) {
+        $laporan = Laporan::where('user_id', Auth::id())
+            ->where('status', 'berjalan')
+            ->findOrFail($id);
+
+        // Hapus foto mulai dari disk storage
+        if ($laporan->foto_mulai && Storage::disk('public')->exists($laporan->foto_mulai)) {
+            Storage::disk('public')->delete($laporan->foto_mulai);
+        }
+
+        $laporan->delete();
+
+        return redirect()->route('laporan.create')->with('success', 'Kegiatan berhasil dibatalkan!');
+    }
+
+    /**
+     * Mendecode teks Base64 dan menyimpannya sebagai file gambar dengan validasi keamanan ketat.
+     */
+    private function saveBase64Image($base64String, $fieldName, $subfolder = 'foto_laporan')
+    {
+        if (!$base64String) {
             return null;
         }
 
-        @[$type, $base64String] = explode(';', $base64String);
-        @[, $base64String] = explode(',', $base64String);
-
-        if (! $base64String) {
-            return null;
+        // 1. Validasi format URI data base64
+        if (!preg_match('/^data:image\/(\w+);base64,/', $base64String, $matches)) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                $fieldName => ['Format foto tidak valid.'],
+            ]);
         }
 
-        $image = base64_decode($base64String);
-        $fileName = time().'_'.uniqid().'.jpg';
-        $path = public_path().'/storage/'.$subfolder.'/'.$fileName;
+        $extension = strtolower($matches[1]);
+        if (!in_array($extension, ['jpeg', 'jpg', 'png', 'gif', 'webp'])) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                $fieldName => ['Ekstensi foto tidak diizinkan.'],
+            ]);
+        }
 
-        File::makeDirectory(public_path().'/storage/'.$subfolder.'/', 0755, true, true);
-        file_put_contents($path, $image);
+        @[, $base64Data] = explode(',', $base64String);
+        if (!$base64Data) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                $fieldName => ['Data foto rusak.'],
+            ]);
+        }
 
-        return $subfolder.'/'.$fileName;
+        $image = base64_decode($base64Data);
+        if ($image === false) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                $fieldName => ['Gagal memproses unggahan foto.'],
+            ]);
+        }
+
+        // 2. Batas ukuran berkas maks 7 MB (7 * 1024 * 1024 bytes)
+        $maxSize = 7 * 1024 * 1024;
+        if (strlen($image) > $maxSize) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                $fieldName => ['Ukuran file foto terlalu besar. Maksimal adalah 7 MB.'],
+            ]);
+        }
+
+        // 3. Validasi Mime-Type asli untuk mencegah eksploitasi file upload
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->buffer($image);
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (!in_array($mimeType, $allowedMimes)) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                $fieldName => ['File harus berupa gambar (JPEG, PNG, GIF, atau WebP).'],
+            ]);
+        }
+
+        $extMap = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+            'image/webp' => 'webp',
+        ];
+        $fileExtension = $extMap[$mimeType] ?? 'jpg';
+
+        $fileName = time().'_'.uniqid().'.'.$fileExtension;
+        $filePath = $subfolder.'/'.$fileName;
+
+        Storage::disk('public')->put($filePath, $image);
+
+        return $filePath;
     }
 }
+

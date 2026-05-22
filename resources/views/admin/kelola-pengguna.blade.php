@@ -1,4 +1,4 @@
-`@extends('layouts.master')
+@extends('layouts.master')
 
 @section('title', 'Kelola Pengguna - ALPHA')
 @section('header_title', 'Kelola Pengguna')
@@ -146,11 +146,11 @@
         }
 
         .table-pengguna th {
-            background-color: #4b5563; /* Dark gray */
+            background-color: #374151; /* Dark gray */
             color: #ffffff; /* White text */
             font-weight: 600;
             font-size: 0.95rem;
-            border-color: #4b5563;
+            border-color: #374151;
       
         }
 

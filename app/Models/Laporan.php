@@ -9,8 +9,7 @@ class Laporan extends Model
     protected $fillable = [
         'user_id', 'kegiatan_id', 'tanggal', 'deskripsi',
         'jam_mulai', 'jam_selesai', 'durasi_menit',
-        'foto_mulai', 'foto_selesai', 'latitude',
-        'longitude', 'lokasi_teks', 'keterangan', 'status',
+        'foto_mulai', 'foto_selesai', 'lokasi_teks', 'status',
     ];
 
     /**

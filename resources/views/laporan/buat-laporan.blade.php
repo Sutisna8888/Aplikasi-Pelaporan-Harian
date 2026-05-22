@@ -70,6 +70,14 @@
             </div>
         </form>
 
+        <form id="formBatal" action="{{ route('laporan.destroy', $laporanAktif->id) }}" method="POST" style="margin-top: 15px;">
+            @csrf
+            @method('DELETE')
+            <button type="button" id="btn_batal_kegiatan" style="width: 100%; padding: 15px; background-color: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background-color 0.2s;">
+                <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Batalkan Kegiatan Ini
+            </button>
+        </form>
+
     @else
         
         <form id="formTahap1" action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
@@ -228,6 +236,8 @@
             reader.readAsDataURL(file);
         }
 
+        const modalError = document.getElementById('modal_error');
+        const btnTutupError = document.getElementById('btn_tutup_error');
         const btnTriggerMulai = document.getElementById('btn_trigger_mulai');
         const btnBukaKameraMulai = document.getElementById('btn_buka_kamera_mulai');
         const inputFotoMulai = document.getElementById('input_foto_mulai');
@@ -317,6 +327,25 @@
                     function() {
                         btnSubmitSelesai.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
                         formTahap2.submit(); 
+                    }
+                );
+            });
+        }
+
+        const btnBatalKegiatan = document.getElementById('btn_batal_kegiatan');
+        const formBatal = document.getElementById('formBatal');
+        if (btnBatalKegiatan) {
+            btnBatalKegiatan.addEventListener('click', function(e) {
+                e.preventDefault();
+                panggilModalKonfirmasi(
+                    'Batalkan Kegiatan?', 
+                    'Apakah Anda yakin ingin membatalkan kegiatan ini? Bukti foto mulai yang diunggah akan dihapus secara permanen dari server.', 
+                    'fas fa-exclamation-triangle', 
+                    '#ef4444',
+                    '<i class="fas fa-trash-alt"></i> Ya, Batalkan', 
+                    function() {
+                        btnBatalKegiatan.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membatalkan...';
+                        formBatal.submit(); 
                     }
                 );
             });

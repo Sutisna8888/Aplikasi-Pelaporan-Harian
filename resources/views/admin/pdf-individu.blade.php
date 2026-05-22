@@ -83,6 +83,16 @@
                 <td>:</td>
                 <td>{{ $laporan->kegiatan->nama_kegiatan ?? '-' }}</td>
             </tr>
+            <tr>
+                <td style="vertical-align: top;"><strong>Deskripsi</strong></td>
+                <td style="vertical-align: top;">:</td>
+                <td>{{ $laporan->deskripsi ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><strong>Tempat/Lokasi</strong></td>
+                <td style="vertical-align: top;">:</td>
+                <td>{{ $laporan->lokasi_teks ?? '-' }}</td>
+            </tr>
         </table>
     </div>
 
