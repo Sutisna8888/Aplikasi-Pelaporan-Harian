@@ -101,14 +101,12 @@
         </div>
     </div>
 
-    <!-- Modal Pop-up Foto Info BPS -->
     <div id="imagePopupModal" class="image-popup-modal" onclick="closeImagePopup()">
         <span class="image-popup-close">&times;</span>
         <img class="image-popup-content" id="popupImage" onclick="event.stopPropagation()">
     </div>
 
     <style>
-        /* --- 1. GAYA KOTAK PEMBUNGKUS --- */
         .card-panel {
             background: #fff;
             padding: 25px;
@@ -165,8 +163,6 @@
             color: #666;
             font-size: 1rem;
         }
-
-        /* --- 2. GAYA TABEL MINI DASHBOARD --- */
         .wrapper-tabel {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -208,18 +204,15 @@
             background-color: #fafafa;
         }
 
-        /* --- 3. GAYA GRAFIK --- */
         .chart-container {
             position: relative;
             height: 300px;
             width: 100%;
         }
 
-        /* --- 4. MEDIA QUERY (LAYAR HP) --- */
         @media (max-width: 768px) {
             .card-panel {
                 padding: 15px;
-                /* Menghemat ruang di layar HP */
                 border-radius: 10px;
                 margin-bottom: 20px;
             }
@@ -240,19 +233,16 @@
 
             .stat-card {
                 padding: 32px 5px;
-                /* Mengurangi ruang kosong di dalam kotak */
                 border-radius: 8px;
             }
 
             .stat-card h3 {
                 font-size: 1.7rem;
-                /* Angka dikecilkan drastis agar '00:01' muat */
                 margin-bottom: 4px;
             }
 
             .stat-card p {
                 font-size: 0.7rem;
-                /* Teks label dikecilkan */
                 line-height: 1.2;
             }
 
@@ -262,7 +252,6 @@
                 padding: 10px 8px;
             }
 
-            /* Merapatkan kolom Waktu dan Tanggal di HP */
             .table-custom th:nth-child(1),
             .table-custom td:nth-child(1),
             .table-custom th:nth-child(3),
@@ -270,8 +259,6 @@
                 width: 1px;
                 white-space: nowrap;
             }
-
-            /* --- PENYESUAIAN INFO BPS UNTUK MOBILE --- */
             .info-bps-section {
                 padding: 20px 15px;
                 margin-bottom: 20px;
@@ -303,10 +290,8 @@
             }
         }
 
-        /* --- 5. INFO BPS SECTION --- */
         .info-bps-section {
             background-color: #3f4246;
-            /* Sesuai gambar, sedikit dark grey */
             padding: 30px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -329,7 +314,6 @@
             gap: 15px;
             overflow-x: auto;
             padding-bottom: 10px;
-            /* Scrollbar Styling */
             scrollbar-width: thin;
             scrollbar-color: #9ca3af #3f4246;
         }
@@ -369,26 +353,22 @@
 
         .news-title {
             color: #505256ff;
-            /* Disesuaikan dengan warna sidebar */
             font-size: 0.95rem;
             text-align: center;
             margin-bottom: 15px;
             font-weight: 700;
-            /* Ditebalkan sedikit agar lebih jelas */
         }
 
         .news-image {
             width: 100%;
             height: 120px;
             object-fit: contain;
-            /* Diubah dari cover ke contain */
             background-color: #f8fafc;
             border-radius: 6px;
             border: 1px solid #e5e7eb;
             cursor: pointer;
             transition: transform 0.2s ease;
             margin-top: auto;
-            /* Mendorong gambar selalu ke bagian paling bawah kartu */
         }
 
         .news-image:hover {
@@ -408,10 +388,8 @@
             color: #9ca3af;
             letter-spacing: 1px;
             margin-top: auto;
-            /* Mendorong kotak placeholder selalu ke bagian paling bawah kartu */
         }
 
-        /* --- 6. MODAL FOTO POP-UP --- */
         .image-popup-modal {
             display: none;
             position: fixed;
@@ -464,7 +442,6 @@
             color: #ef4444;
         }
 
-        /* Penyesuaian Modal untuk Mobile */
         @media (max-width: 768px) {
             .image-popup-content {
                 max-width: 95%;

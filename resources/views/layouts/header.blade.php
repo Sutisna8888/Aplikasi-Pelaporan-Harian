@@ -1,6 +1,5 @@
 <header class="topbar">
     @if(auth()->check() && auth()->user()->role === 'admin')
-        <!-- Header Utama (Minimalis untuk Admin) -->
         <div class="topbar-row-1">
             <div class="topbar-brand">
                 <button type="button" class="hamburger" id="menu-toggle" aria-label="Toggle menu">
@@ -16,7 +15,6 @@
             </form>
         </div>
     @else
-        <!-- Header Lama (Dengan Logo untuk User Biasa) -->
         <div class="topbar-row-1">
             <div class="topbar-brand">
                 <button type="button" class="hamburger" id="menu-toggle" aria-label="Toggle menu">

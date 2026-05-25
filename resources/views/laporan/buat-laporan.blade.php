@@ -70,11 +70,11 @@
             </div>
         </form>
 
-        <form id="formBatal" action="{{ route('laporan.destroy', $laporanAktif->id) }}" method="POST" style="margin-top: 15px;">
+        <form id="formBatal" action="{{ route('laporan.destroy', $laporanAktif->id) }}" method="POST" style="margin-top: 20px; display: flex; justify-content: center;">
             @csrf
             @method('DELETE')
-            <button type="button" id="btn_batal_kegiatan" style="width: 100%; padding: 15px; background-color: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background-color 0.2s;">
-                <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Batalkan Kegiatan Ini
+            <button type="button" id="btn_batal_kegiatan" style="padding: 10px 20px; background-color: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 0.875rem; cursor: pointer; transition: background-color 0.2s;">
+                <i class="fas fa-trash-alt" style="margin-right: 6px;"></i> Batalkan Kegiatan Ini
             </button>
         </form>
 

@@ -6,10 +6,8 @@
     <title>@yield('title', 'ALPHA BPS')</title>
     <link rel="icon" type="image/png" href="{{ asset('images/favicon_alpha.png') }}">
     
-    <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Memanggil file CSS Utama -->
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
@@ -19,7 +17,6 @@
 </head>
 <body>
 
-    <!-- Memanggil Sidebar Sesuai Role -->
     @if(auth()->check() && auth()->user()->role === 'admin')
         @include('layouts.sidebar-admin')
     @else
@@ -28,10 +25,8 @@
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <div class="main-wrapper">
-        <!-- Memanggil Header -->
         @include('layouts.header')
 
-        <!-- Area Konten Utama -->
         <main class="content">
             @yield('content')
         </main>

@@ -5,7 +5,6 @@
 
 @section('content')
 <style>
-    /* Custom CSS for Admin Dashboard */
     .admin-dashboard {
         display: flex;
         flex-direction: column;
@@ -82,7 +81,6 @@
         color: #3b82f6;
     }
     
-    /* Calendar styles */
     .calendar-widget {
         background: #fff;
         border-radius: 12px;
@@ -130,7 +128,6 @@
         margin: 0 auto;
     }
     
-    /* Bottom row */
     .bottom-row {
         background: #fff;
         border-radius: 12px;
@@ -210,9 +207,7 @@
 </style>
 
 <div class="admin-dashboard">
-    <!-- TOP ROW -->
     <div class="top-row">
-        <!-- Static Calendar -->
         <div class="calendar-widget">
             <div class="cal-header">
                 <span>{{ $calMonthName }}</span>
@@ -234,7 +229,6 @@
 
                 @for ($day = 1; $day <= $calDaysInMonth; $day++)
                     @php
-                        // Hitung hari dalam minggu (0 = Minggu, 6 = Sabtu)
                         $currentDayOfWeek = ($i + $day - 1) % 7;
                         $isSunday = $currentDayOfWeek == 0;
                         $isActive = $day == $calToday;
@@ -248,9 +242,8 @@
                 @endfor
                 
                 @php
-                    // Isi sisa grid agar genap (opsional, tapi baik untuk layout flex/grid statis)
                     $totalCells = $calFirstDayOfWeek + $calDaysInMonth;
-                    $remainingCells = 42 - $totalCells; // max 6 baris x 7 hari
+                    $remainingCells = 42 - $totalCells;
                     if ($remainingCells >= 7 && $totalCells <= 35) {
                         $remainingCells -= 7;
                     }
@@ -261,14 +254,12 @@
             </div>
         </div>
         
-        <!-- Active Users Card -->
         <div class="card card-orange">
             <div class="card-number">{{ $penggunaAktifHarian }}</div>
             <div class="card-icon"><i class="fas fa-file-alt"></i></div>
             <div class="card-title">Pengguna Aktif Harian</div>
         </div>
         
-        <!-- Total Users Card -->
         <div class="card card-blue">
             <div class="card-number">{{ $totalPengguna }}</div>
             <div class="card-icon"><i class="fas fa-users"></i></div>
@@ -276,7 +267,6 @@
         </div>
     </div>
     
-    <!-- BOTTOM ROW -->
     <div class="bottom-row">
         <div class="table-header-container">
             <h3 class="table-title">Riwayat Laporan Hari ini</h3>
