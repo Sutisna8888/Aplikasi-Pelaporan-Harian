@@ -46,17 +46,17 @@
 
 <body>
 
-    <table style="width: 100%; margin-bottom: 20px;">
+    <table style="width: 100%; margin-bottom: 20px; table-layout: fixed;">
         <tr>
-            <td style="width: 20%; text-align: left; vertical-align: middle;">
+            <td style="width: 30%; text-align: left; vertical-align: middle;">
                 @if(file_exists(public_path('images/logo-bps.png')))
-                    <img src="{{ public_path('images/logo-bps.png') }}" alt="Logo" style="height: 60px;">
+                    <img src="{{ public_path('images/logo-bps.png') }}" alt="Logo" style="height: 90px; max-width: 100%; object-fit: contain;">
                 @endif
             </td>
-            <td style="width: 60%; text-align: center; vertical-align: middle;">
+            <td style="width: 40%; text-align: center; vertical-align: middle;">
                 <h3 style="margin: 0; text-transform: uppercase;">Bukti Laporan</h3>
             </td>
-            <td style="width: 20%;"></td>
+            <td style="width: 30%;"></td>
         </tr>
     </table>
 

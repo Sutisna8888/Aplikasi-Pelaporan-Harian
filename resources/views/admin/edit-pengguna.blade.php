@@ -9,6 +9,17 @@
         <form id="formEditPengguna" action="#" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <input type="hidden" name="user_id" id="edit_user_id" value="{{ old('user_id') }}">
+
+            @if ($errors->any() && old('_method') === 'PUT')
+                <div style="background: #fee2e2; color: #b91c1c; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9rem;">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             
             <div class="input-group">
                 <label>Nama Lengkap</label>
@@ -96,6 +107,7 @@
         document.getElementById('formEditPengguna').action = '/admin/pengguna/' + user.id;
         
         // Isi form dengan data user
+        document.getElementById('edit_user_id').value = user.id || '';
         document.getElementById('edit_username').value = user.username || user.name || '';
         document.getElementById('edit_nip').value = user.nip || '';
         document.getElementById('edit_email').value = user.email || '';
@@ -107,4 +119,18 @@
         document.getElementById('edit_ttd_btn_text').textContent = 'Upload Tandatangan';
         document.getElementById('edit_ttd_upload').value = '';
     }
+
+    // Jika ada error validasi pada form Edit Pengguna (form PUT)
+    @if($errors->any() && old('_method') === 'PUT')
+        document.addEventListener('DOMContentLoaded', function() {
+            openEditModal({
+                id: "{{ old('user_id') }}",
+                username: "{{ old('username') }}",
+                nip: "{{ old('nip') }}",
+                email: "{{ old('email') }}",
+                jabatan: "{{ old('jabatan') }}",
+                role: "{{ old('role') }}"
+            });
+        });
+    @endif
 </script>

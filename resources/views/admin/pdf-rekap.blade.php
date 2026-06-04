@@ -90,12 +90,12 @@
 
 <body>
 
-    <table style="width: 100%; margin-bottom: 30px;">
+    <table style="width: 100%; margin-bottom: 30px; table-layout: fixed;">
         <tr>
-            <td style="width: 20%; text-align: left; vertical-align: top;">
-                <img src="{{ public_path('images/logo-laporan-bps.png') }}" alt="Logo" style="height: 100px;">
+            <td style="width: 30%; text-align: left; vertical-align: middle;">
+                <img src="{{ public_path('images/logo-laporan-bps.png') }}" alt="Logo" style="height: 120px; max-width: 100%; object-fit: contain;">
             </td>
-            <td style="width: 40%; text-align: center; vertical-align: top; padding-top: 30px;">
+            <td style="width: 40%; text-align: center; vertical-align: middle;">
                 <h2 style="margin: 0; font-size: 16px; font-weight: bold; text-transform: uppercase;">{{ $judul }}</h2>
                 <p style="margin: 5px 0 0 0;">
                     @if(isset($judul) && $judul == 'LAPORAN HARIAN')
@@ -106,7 +106,7 @@
                     {{ $periode }}
                 </p>
             </td>
-            <td style="width: 20%;"></td>
+            <td style="width: 30%;"></td>
         </tr>
     </table>
 

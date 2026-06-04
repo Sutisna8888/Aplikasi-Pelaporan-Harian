@@ -31,10 +31,23 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'string', 'max:20', 'unique:'.User::class],
+            'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s\.\,\'\`\-]+$/'],
+            'nip' => ['required', 'string', 'regex:/^[0-9]+$/', 'min:9', 'max:20', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'username.required' => 'Nama Lengkap wajib diisi.',
+            'username.regex' => 'Nama Lengkap hanya boleh berisi huruf, angka, spasi, titik, koma, dan tanda kutip.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.regex' => 'NIP harus berupa angka.',
+            'nip.min' => 'NIP minimal harus berisi 5 karakter.',
+            'nip.max' => 'NIP maksimal harus berisi 20 karakter.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format Email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'password.required' => 'Password wajib diisi.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
         $user = User::create([

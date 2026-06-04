@@ -35,13 +35,32 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
-            'nip' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'jabatan' => 'nullable|string|max:255',
-            'password' => 'required|string|min:8',
-            'role' => 'required|in:admin,pegawai',
-            'ttd' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s\.\,\'\`\-]+$/'],
+            'nip' => ['required', 'string', 'regex:/^[0-9]+$/', 'min:5', 'max:20', 'unique:users'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
+            'jabatan' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s\.\,\/\-]+$/'],
+            'password' => ['required', 'string', 'min:8'],
+            'role' => ['required', 'in:admin,pegawai'],
+            'ttd' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ], [
+            'username.required' => 'Nama Lengkap wajib diisi.',
+            'username.regex' => 'Nama Lengkap hanya boleh berisi huruf, angka, spasi, titik, koma, dan tanda kutip.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.regex' => 'NIP harus berupa angka.',
+            'nip.min' => 'NIP minimal harus berisi 5 karakter.',
+            'nip.max' => 'NIP maksimal harus berisi 20 karakter.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format Email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'jabatan.regex' => 'Jabatan hanya boleh berisi huruf, angka, spasi, titik, koma, garis miring, dan strip.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal harus berisi 8 karakter.',
+            'role.required' => 'Role wajib diisi.',
+            'role.in' => 'Role tidak valid.',
+            'ttd.image' => 'Tanda tangan harus berupa gambar.',
+            'ttd.mimes' => 'Tanda tangan harus berupa file dengan tipe: jpeg, png, jpg, gif.',
+            'ttd.max' => 'Ukuran tanda tangan maksimal 2048 KB.',
         ]);
 
         $ttdPath = null;
@@ -70,13 +89,30 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'username' => 'required|string|max:255',
-            'nip' => 'required|string|max:255|unique:users,nip,'.$user->id,
-            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'password' => 'nullable|string|min:8',
-            'jabatan' => 'nullable|string|max:255',
-            'role' => 'required|in:admin,pegawai',
-            'ttd' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s\.\,\'\`\-]+$/'],
+            'nip' => ['required', 'string', 'regex:/^[0-9]+$/', 'min:5', 'max:20', 'unique:users,nip,'.$user->id],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'jabatan' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s\.\,\/\-]+$/'],
+            'password' => ['nullable', 'string', 'min:8'],
+            'role' => ['required', 'in:admin,pegawai'],
+            'ttd' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ], [
+            'username.required' => 'Nama Lengkap wajib diisi.',
+            'username.regex' => 'Nama Lengkap hanya boleh berisi huruf, angka, spasi, titik, koma, dan tanda kutip.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.regex' => 'NIP harus berupa angka.',
+            'nip.min' => 'NIP minimal harus berisi 5 karakter.',
+            'nip.max' => 'NIP maksimal harus berisi 20 karakter.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format Email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'jabatan.regex' => 'Jabatan hanya boleh berisi huruf, angka, spasi, titik, koma, garis miring, dan strip.',
+            'password.min' => 'Password minimal harus berisi 8 karakter.',
+            'role.in' => 'Role tidak valid.',
+            'ttd.image' => 'Tanda tangan harus berupa gambar.',
+            'ttd.mimes' => 'Tanda tangan harus berupa file dengan tipe: jpeg, png, jpg, gif.',
+            'ttd.max' => 'Ukuran tanda tangan maksimal 2048 KB.',
         ]);
 
         $dataToUpdate = [
