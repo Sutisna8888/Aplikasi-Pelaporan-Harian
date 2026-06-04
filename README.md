@@ -1,58 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Pelaporan Harian BPS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem informasi berbasis web yang dibangun menggunakan framework Laravel 13 untuk memfasilitasi pelaporan harian kinerja pegawai di lingkungan Badan Pusat Statistik (BPS) Kota Sukabumi.
 
-## About Laravel
+## Persyaratan Sistem (System Requirements)
+Sebelum menginstal aplikasi ini di server, pastikan server BPS sudah terinstal:
+- PHP >= 8.3 
+- Composer
+- Node.js & NPM
+- MySQL atau MariaDB
+- Web Server (Apache/Nginx)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Panduan Instalasi (Installation Guide)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Ikuti langkah-langkah berikut untuk menjalankan aplikasi ini di server lokal atau production:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Clone Repository**
+   Download atau clone repository ini ke dalam direktori server Anda (misal: `htdocs` atau `/var/www/html`).
+   ```bash
+   git clone [https://github.com/Sutisna8888/Aplikasi-Pelaporan-Harian.git]
+   cd sistem-pelaporan-harian-bps
+   ```
 
-## Learning Laravel
+2. **Instalasi Dependensi PHP (Vendor)**
+   Jalankan perintah Composer untuk menginstal semua library PHP yang dibutuhkan oleh Laravel.
+   ```bash
+   composer install
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Instalasi Dependensi Frontend (Node Modules)**
+   Jalankan perintah NPM untuk menginstal dan mem-build aset frontend (Tailwind CSS/Vite).
+   ```bash
+   npm install
+   npm run build
+   ```
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Konfigurasi Environment (.env)**
+   Copy file `.env.example` menjadi `.env`.
+   ```bash
+   cp .env.example .env
+   ```
+   Buka file `.env` yang baru dibuat, lalu sesuaikan konfigurasi database server BPS:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nama_database_bps
+   DB_USERNAME=username_database
+   DB_PASSWORD=password_database
+   ```
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+5. **Generate Application Key**
+   Jalankan perintah ini untuk men-generate kunci enkripsi aplikasi Laravel.
+   ```bash
+   php artisan key:generate
+   ```
 
-## Agentic Development
+6. **Migrasi Database & Seeder**
+   Jalankan perintah ini untuk membuat struktur tabel di database dan memasukkan data awal (akun default dan data master kegiatan).
+   ```bash
+   php artisan migrate --seed
+   ```
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+7. **Link Storage**
+   Jalankan perintah ini agar file gambar/dokumen yang di-upload oleh user dapat diakses oleh publik.
+   ```bash
+   php artisan storage:link
+   ```
 
-```bash
-composer require laravel/boost --dev
+8. **Hak Akses Direktori (Khusus Server Linux/Mac)**
+   Pastikan folder `storage` dan `bootstrap/cache` memiliki hak akses (permission) yang tepat agar Laravel dapat menulis file ke dalamnya.
+   ```bash
+   chmod -R 775 storage bootstrap/cache
+   ```
 
-php artisan boost:install
-```
+## 🔐 Informasi Akun Default
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Setelah instalasi berhasil, Anda dapat login menggunakan akun default berikut yang di-generate oleh sistem (Seeder):
 
-## Contributing
+**1. Akun Admin**
+- **Username / NIP:** `admin_bps` atau `199001012024011001`
+- **Email:** admin@bps.go.id
+- **Password:** `password123`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**2. Akun Pegawai**
+- **Username / NIP:** `pegawai_bps` atau `199505052024012002`
+- **Email:** pegawai@bps.go.id
+- **Password:** `password123`
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> [!WARNING]
+> **PERHATIAN KEAMANAN:** 
+> Demi keamanan sistem, setelah berhasil login untuk pertama kalinya menggunakan akun di atas, **TIM BPS WAJIB SEGERA MENGGANTI PASSWORD DEFAULT TERSEBUT** melalui menu pengaturan akun di dalam aplikasi. Jangan biarkan password tetap `password123` saat aplikasi sudah masuk tahap production!

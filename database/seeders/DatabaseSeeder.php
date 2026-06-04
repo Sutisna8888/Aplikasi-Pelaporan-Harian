@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@bps.go.id',
                 'password' => bcrypt('password123'),
                 'role' => 'admin',
-                'jabatan' => 'Pranata Komputer',
+                'jabatan' => 'Kepala BPS Kota Sukabumi',
             ]
         );
 
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'pegawai@bps.go.id',
                 'password' => bcrypt('password123'),
                 'role' => 'pegawai',
-                'jabatan' => 'Statistisi Pertama',
+                'jabatan' => 'Ketua tim humas',
             ]
         );
 
