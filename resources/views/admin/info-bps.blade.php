@@ -209,9 +209,18 @@
         @endif
 
         @if(session('success'))
-            <div style="background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; font-weight: 500;">
+            <div id="success-alert" style="background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; font-weight: 500; transition: opacity 0.5s ease;">
                 {{ session('success') }}
             </div>
+            <script>
+                setTimeout(function() {
+                    var alert = document.getElementById('success-alert');
+                    if (alert) {
+                        alert.style.opacity = '0';
+                        setTimeout(function() { alert.remove(); }, 500);
+                    }
+                }, 3000);
+            </script>
         @endif
 
         <!-- Card Daftar Info -->
