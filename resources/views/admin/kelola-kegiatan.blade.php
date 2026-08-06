@@ -348,11 +348,8 @@
             var modal = document.getElementById('modalEditKegiatan');
             var form = document.getElementById('formEditKegiatan');
             var inputNama = document.getElementById('edit_nama_kegiatan');
-
-            // Set action URL untuk form edit
             form.action = `/admin/kegiatan/${kegiatan.id}`;
             
-            // Isi nilai input dengan data kegiatan saat ini
             inputNama.value = kegiatan.nama_kegiatan;
 
             modal.style.display = 'flex';
@@ -362,7 +359,6 @@
             document.getElementById('modalEditKegiatan').style.display = 'none';
         }
 
-        // Close modals when clicking outside
         window.onclick = function(event) {
             var modalTambah = document.getElementById('modalTambahKegiatan');
             var modalEdit = document.getElementById('modalEditKegiatan');

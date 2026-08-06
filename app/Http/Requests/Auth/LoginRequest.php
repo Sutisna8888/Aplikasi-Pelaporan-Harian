@@ -38,14 +38,8 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-
-        // 1. Ambil apa yang diketik user di form
         $loginId = $this->input('login_id');
-
-        // 2. Cek apakah formatnya angka (NIP)? Jika iya jadikan 'nip', jika tidak jadikan 'username'
         $fieldType = is_numeric($loginId) ? 'nip' : 'username';
-
-        // 3. kunci untuk login
         $credentials = [
             $fieldType => $loginId,
             'password' => $this->input('password'),

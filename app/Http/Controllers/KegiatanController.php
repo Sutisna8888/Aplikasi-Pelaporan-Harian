@@ -16,7 +16,6 @@ class KegiatanController extends Controller
 
         return view('admin.kelola-kegiatan', compact('kegiatans'));
     }
-
     /**
      * Menyimpan kegiatan baru.
      */
@@ -32,15 +31,6 @@ class KegiatanController extends Controller
 
         return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil ditambahkan');
     }
-
-    /**
-     * Menampilkan form edit kegiatan.
-     */
-    public function edit(Kegiatan $kegiatan)
-    {
-        return view('admin.edit-kegiatan', compact('kegiatan'));
-    }
-
     /**
      * Memperbarui data kegiatan.
      */
@@ -56,7 +46,6 @@ class KegiatanController extends Controller
 
         return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil diupdate');
     }
-
     /**
      * Mengubah status aktif kegiatan.
      */
